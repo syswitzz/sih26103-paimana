@@ -1,0 +1,1 @@
+"""Project service placeholder."""

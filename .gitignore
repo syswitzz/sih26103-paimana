@@ -1,5 +1,9 @@
 .env
-__pycache__/
 .venv/
-node_modules/
+__pycache__/
 *.pyc
+node_modules/
+dist/
+.DS_Store
+ml/models/*.pkl
+!ml/models/.gitkeep
