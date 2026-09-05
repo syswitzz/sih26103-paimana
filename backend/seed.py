@@ -1,4 +1,4 @@
-"""Populate the PAIMANA AI SQLite database with synthetic demo data."""
+"""Populate the PAIMANA AI PostgreSQL database with synthetic demo data."""
 from datetime import UTC, date, datetime, timedelta
 
 from app.database.database import Base, SessionLocal, engine

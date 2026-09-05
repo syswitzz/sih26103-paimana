@@ -1,17 +1,21 @@
-from pathlib import Path
+import os
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import DeclarativeBase, sessionmaker
 
-DATABASE_PATH = Path(__file__).resolve().parents[2] / "paimana.db"
-DATABASE_URL = f"sqlite:///{DATABASE_PATH}"
+# Set DATABASE_URL in the environment for local, shared, or hosted PostgreSQL.
+# The default is intentionally suitable for a local development installation.
+DATABASE_URL = os.getenv(
+    "DATABASE_URL",
+    "postgresql+psycopg://postgres:postgres@localhost:5432/paimana",
+)
 
 
 class Base(DeclarativeBase):
     pass
 
 
-engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
+engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 
