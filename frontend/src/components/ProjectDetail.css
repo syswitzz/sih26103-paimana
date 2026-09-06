@@ -1,0 +1,325 @@
+.project-detail-page {
+    min-height: 100vh;
+    background: #f5f7fb;
+    padding-bottom: 50px;
+    color: #172033;
+}
+
+/* HEADER */
+
+.project-detail-header {
+    background: white;
+    padding: 22px 40px;
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    border-bottom: 1px solid #e5e9f0;
+}
+
+.back-button {
+    border: none;
+    background: #eef2f7;
+    padding: 10px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.back-button:hover {
+    background: #e2e7ef;
+}
+
+.project-title {
+    flex: 1;
+}
+
+.project-title span {
+    font-size: 13px;
+    color: #7b8494;
+}
+
+.project-title h1 {
+    margin: 5px 0 0;
+    font-size: 25px;
+}
+
+/* RISK BADGE */
+
+.risk-badge {
+    padding: 9px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.risk-badge.high {
+    background: #ffe4e4;
+    color: #c62828;
+}
+
+.risk-badge.medium {
+    background: #fff0cf;
+    color: #a66a00;
+}
+
+.risk-badge.low {
+    background: #dff5e5;
+    color: #23833c;
+}
+
+
+/* MAIN */
+
+.project-detail-content {
+    width: min(1200px, 92%);
+    margin: 30px auto;
+}
+
+.project-detail-content section {
+    margin-bottom: 25px;
+}
+
+.project-detail-content h2 {
+    font-size: 19px;
+    margin-bottom: 15px;
+}
+
+
+/* PROJECT INFORMATION */
+
+.project-info-card,
+.description-card,
+.officer-card,
+.timeline-card,
+.progress-card,
+.risk-card {
+    background: white;
+    border: 1px solid #e5e9f0;
+    border-radius: 14px;
+    padding: 24px;
+    box-shadow: 0 3px 12px rgba(20, 35, 60, 0.05);
+}
+
+.project-info-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.info-item span,
+.cost-card span,
+.timeline-item span,
+.risk-status span,
+.officer-card span {
+    color: #7b8494;
+    font-size: 13px;
+}
+
+.info-item strong {
+    font-size: 14px;
+}
+
+
+/* FINANCIAL */
+
+.cost-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+
+.cost-card {
+    background: white;
+    padding: 23px;
+    border-radius: 14px;
+    border: 1px solid #e5e9f0;
+}
+
+.cost-card h3 {
+    margin: 10px 0 0;
+    font-size: 21px;
+}
+
+
+/* PROGRESS */
+
+.progress-card {
+    display: grid;
+    gap: 25px;
+}
+
+.progress-heading {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 9px;
+}
+
+.progress-heading span {
+    font-size: 14px;
+}
+
+.progress-bar {
+    height: 10px;
+    background: #e8ecf2;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: #315efb;
+    border-radius: 10px;
+}
+
+
+/* TIMELINE */
+
+.timeline-card {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.timeline-item {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.timeline-item strong {
+    font-size: 15px;
+}
+
+.timeline-line {
+    flex: 1;
+    height: 2px;
+    background: #d8dee8;
+}
+
+.timeline-item.delay strong {
+    color: #c62828;
+}
+
+
+/* RISK */
+
+.risk-card {
+    display: flex;
+    align-items: center;
+    gap: 60px;
+}
+
+.risk-score {
+    display: flex;
+    align-items: baseline;
+    gap: 7px;
+}
+
+.risk-score span {
+    color: #7b8494;
+}
+
+.risk-score strong {
+    font-size: 42px;
+}
+
+.risk-score small {
+    color: #7b8494;
+}
+
+.risk-details {
+    display: flex;
+    gap: 60px;
+}
+
+.risk-status {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.risk-text.high {
+    color: #c62828;
+}
+
+.risk-text.medium {
+    color: #a66a00;
+}
+
+.risk-text.low {
+    color: #23833c;
+}
+
+
+/* DESCRIPTION */
+
+.description-card p {
+    margin: 0;
+    line-height: 1.7;
+    color: #596273;
+}
+
+
+/* ADMINISTRATION */
+
+.officer-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+.officer-card div {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 800px) {
+
+    .project-detail-header {
+        padding: 20px;
+        flex-wrap: wrap;
+    }
+
+    .project-title {
+        order: 2;
+        width: 100%;
+    }
+
+    .project-info-grid,
+    .cost-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .timeline-card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .timeline-line {
+        width: 100%;
+    }
+
+    .risk-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 25px;
+    }
+
+    .risk-details {
+        gap: 30px;
+    }
+
+    .officer-card {
+        grid-template-columns: 1fr;
+    }
+}
