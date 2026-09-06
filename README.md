@@ -1,4 +1,4 @@
-# Paimana
+# Paimanaa
 
 Initial project scaffold for an infrastructure project-risk platform.
 
