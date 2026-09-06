@@ -119,14 +119,14 @@ function Dashboard(){
                 <div className="chartsection">
                     <div className="progress health overview">
                     
-                    <h2>Risk Distribution</h2>
+                        <h2>Risk Distribution</h2>
 
-                    <div className="risk-chart">
-                        <Doughnut
-                            data={riskData}
-                            options={riskOptions}
-                        />
-                    </div>
+                        <div className="risk-chart">
+                            <Doughnut
+                                data={riskData}
+                                options={riskOptions}
+                            />
+                        </div>
 
 
                     </div>

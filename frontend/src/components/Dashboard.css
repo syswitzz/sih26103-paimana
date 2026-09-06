@@ -234,6 +234,9 @@ main {
 }
 .progress.health.overview {
     padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .progress.health.overview h2 {
@@ -246,6 +249,7 @@ main {
     width: 100%;
     height: 280px;
     position: relative;
+    
 }
 
 
