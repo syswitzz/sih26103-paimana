@@ -32,8 +32,7 @@ CREATE TABLE IF NOT EXISTS milestones (
     status VARCHAR(50) NOT NULL CHECK (status IN ('PLANNED','IN_PROGRESS','COMPLETED','DELAYED','CANCELLED')),
     sequence_no INTEGER NOT NULL CHECK (sequence_no > 0),
     dependency_milestone_id INTEGER REFERENCES milestones(milestone_id) ON DELETE SET NULL ON UPDATE CASCADE,
-    CONSTRAINT milestones_dependency_not_self_chk CHECK (dependency_milestone_id IS NULL OR dependency_milestone_id <> milestone_id),
-    CONSTRAINT milestones_actual_date_chk CHECK (actual_date IS NULL OR actual_date >= planned_date)
+    CONSTRAINT milestones_dependency_not_self_chk CHECK (dependency_milestone_id IS NULL OR dependency_milestone_id <> milestone_id)
 );
 
 --PROGRESS_REPORTS table
