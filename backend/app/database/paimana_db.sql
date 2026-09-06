@@ -13,7 +13,11 @@ CREATE TABLE IF NOT EXISTS projects (
     planned_end_date DATE NOT NULL,
     current_status VARCHAR(50) NOT NULL,
     category VARCHAR(100) NOT NULL,
-    size_bucket VARCHAR(50) NOT NULL,
+    size_bucket VARCHAR(20) GENERATED ALWAYS AS (
+        CASE WHEN sanctioned_cost < 500 THEN 'SMALL'
+             WHEN sanctioned_cost < 1000 THEN 'MEDIUM'
+             ELSE 'LARGE' END
+    ) STORED,
     CONSTRAINT projects_date_order_chk CHECK (planned_end_date >= start_date)
 );
 
@@ -103,3 +107,18 @@ CREATE TABLE IF NOT EXISTS audit_log (
     details JSON
 );
 
+-- query path indexes for project monitoring, risk ranking, alerts, workflow and audit views.
+
+CREATE INDEX IF NOT EXISTS idx_projects_sector ON projects(sector);
+CREATE INDEX IF NOT EXISTS idx_projects_ministry ON projects(ministry);
+CREATE INDEX IF NOT EXISTS idx_projects_state ON projects(state);
+CREATE INDEX IF NOT EXISTS idx_projects_status ON projects(current_status);
+CREATE INDEX IF NOT EXISTS idx_milestones_project_sequence ON milestones(project_id, sequence_no);
+CREATE INDEX IF NOT EXISTS idx_progress_project_date ON progress_reports(project_id, report_date DESC);
+CREATE INDEX IF NOT EXISTS idx_risk_project_computed ON risk_scores(project_id, computed_at DESC);
+CREATE INDEX IF NOT EXISTS idx_risk_delay_probability ON risk_scores(delay_probability DESC);
+CREATE INDEX IF NOT EXISTS idx_alerts_severity_status ON alerts(severity, status);
+CREATE INDEX IF NOT EXISTS idx_alerts_project_generated ON alerts(project_id, generated_at DESC);
+CREATE INDEX IF NOT EXISTS idx_interventions_alert ON interventions(alert_id);
+CREATE INDEX IF NOT EXISTS idx_audit_entity ON audit_log(entity_type, entity_id, timestamp DESC);
+CREATE INDEX IF NOT EXISTS idx_audit_user_time ON audit_log(user_id, timestamp DESC);
