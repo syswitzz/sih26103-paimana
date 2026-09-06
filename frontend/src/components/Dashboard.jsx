@@ -2,6 +2,21 @@ import React,{useState} from "react";
 import { useNavigate } from "react-router-dom";
 import logo from '../Static/logo.png';
 import "./Dashboard.css";
+import IndiaRiskMap from "./IndiaRiskMap";
+import { Doughnut } from "react-chartjs-2";
+import {
+    Chart as ChartJS,
+    ArcElement,
+    Tooltip,
+    Legend
+} from "chart.js";
+
+// Register Chart.js components
+ChartJS.register(
+    ArcElement,
+    Tooltip,
+    Legend
+);
 function Dashboard(){
     const navigate = useNavigate();
 
@@ -17,11 +32,36 @@ function Dashboard(){
             }
         });
     }
+    const riskData = {
+    labels: ["High Risk", "Medium Risk", "Low Risk"],
+    datasets: [
+        {
+            data: [52, 98, 114],
+            backgroundColor: [
+                "#ef4444", // High
+                "#f59e0b", // Medium
+                "#22c55e"  // Low
+            ],
+            borderWidth: 0
+        }
+    ]
+};
+
+    const riskOptions = {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                position: "bottom"
+            }
+        },
+        cutout: "65%"
+    };
     return(
         <>
             <nav>
                 <img src={logo}alt="PAIMANA Logo"></img>
-                <button>☀️</button>
+                <button id="riskbtn"><strong>+Predict risk</strong></button>
                 <button>Login</button>
             </nav>
             <div className="searchbox">
@@ -78,11 +118,20 @@ function Dashboard(){
                 </div>
                 <div className="chartsection">
                     <div className="progress health overview">
-                    <h1> pie chart here !</h1>
+                    
+                    <h2>Risk Distribution</h2>
+
+                    <div className="risk-chart">
+                        <Doughnut
+                            data={riskData}
+                            options={riskOptions}
+                        />
+                    </div>
+
 
                     </div>
                     <div className="liveproject">
-                        <h1> india map live project here !</h1>
+                        <IndiaRiskMap />
 
                     </div>
                 </div>

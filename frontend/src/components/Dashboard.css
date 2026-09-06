@@ -183,7 +183,14 @@ nav button:hover {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
     box-sizing: border-box;
 }
+#riskbtn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #7094df;
+    width: 6rem;
 
+}
 /* ==========================================
    MAIN
 ========================================== */
@@ -224,6 +231,21 @@ main {
     color: #172b4d;
 
     margin-bottom: 5px;
+}
+.progress.health.overview {
+    padding: 20px;
+}
+
+.progress.health.overview h2 {
+    margin: 0 0 15px;
+    font-size: 20px;
+    color: #172033;
+}
+
+.risk-chart {
+    width: 100%;
+    height: 280px;
+    position: relative;
 }
 
 
