@@ -134,3 +134,26 @@ CREATE INDEX IF NOT EXISTS idx_alerts_project_generated ON alerts(project_id, ge
 CREATE INDEX IF NOT EXISTS idx_interventions_outcome_status ON interventions(outcome_status);
 CREATE INDEX IF NOT EXISTS idx_audit_entity ON audit_log(entity_type, entity_id, timestamp DESC);
 CREATE INDEX IF NOT EXISTS idx_audit_user_time ON audit_log(user_id, timestamp DESC);
+
+-- A project_overview that shows core details and most recent data 
+CREATE OR REPLACE VIEW project_overview AS
+SELECT p.project_id, p.name, p.sector, p.ministry, p.state, p.district,
+       p.sanctioned_cost, p.revised_cost, p.start_date, p.planned_end_date,
+       p.current_status, p.category, p.size_bucket,
+       pr.report_date AS latest_report_date,
+       pr.physical_progress_pct AS latest_physical_progress_pct,
+       pr.expenditure_cumulative AS latest_expenditure_cumulative,
+       rs.computed_at AS latest_risk_computed_at,
+       rs.health_score AS latest_health_score,
+       rs.delay_probability AS latest_delay_probability,
+       rs.cost_overrun_estimate AS latest_cost_overrun_estimate,
+       rs.component_breakdown AS latest_component_breakdown
+FROM projects p
+LEFT JOIN LATERAL (
+    SELECT * FROM progress_reports x WHERE x.project_id = p.project_id
+    ORDER BY x.report_date DESC LIMIT 1
+) pr ON TRUE
+LEFT JOIN LATERAL (
+    SELECT * FROM risk_scores x WHERE x.project_id = p.project_id
+    ORDER BY x.computed_at DESC LIMIT 1
+) rs ON TRUE;
