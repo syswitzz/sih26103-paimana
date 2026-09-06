@@ -2,7 +2,7 @@
 from datetime import UTC, date, datetime, timedelta
 
 from app.database.database import Base, SessionLocal, engine
-from app.models.models import Alert, Milestone, ProgressReport, Project, RiskScore
+from app.models.models import Alert, AuditLog, Intervention, Milestone, ProgressReport, Project, RiskScore, User #sudhanshu ye kuchh changes ham is file mein bhi kiye hain jo ki ham tumko pehle bataye the ki ye tables lagengi database mein
 
 PROJECTS = [
     ("Eastern Freight Corridor Package A", "Railways", "Ministry of Railways", "Bihar", "Munger", 2200, "IN_PROGRESS", 78, .71),
@@ -28,22 +28,44 @@ def main():
             print("Database already contains projects; seed skipped.")
             return
         today = date.today()
+        # change jo ki user table ko data populate karega
+        demo_user = User(name="Demo Officer", role="ADMIN", email="demo.officer@paimana.local")
+        db.add(demo_user)
+        db.flush()
         for index, (name, sector, ministry, state, district, cost, status, progress, risk) in enumerate(PROJECTS, 1):
-            project = Project(name=name, sector=sector, ministry=ministry, state=state, district=district,
+            # yahan ham bucket size bas change kiye hain kyuki wo ham database se handle kar rhe hain
+            project = Project(
+                name=name, sector=sector, ministry=ministry, state=state, district=district,
                 sanctioned_cost=cost, revised_cost=cost * (1.12 if risk >= .67 else 1.02),
-                start_date=today - timedelta(days=600 - index * 20), planned_end_date=today + timedelta(days=365 + index * 20),
-                current_status=status, category="Infrastructure", size_bucket="Large" if cost >= 1000 else "Medium")
+                start_date=today - timedelta(days=600 - index * 20),
+                planned_end_date=today + timedelta(days=365 + index * 20),
+                current_status=status, category="Infrastructure",
+            )
+            db.add(project);db.flush()
+            first_planned = project.start_date + timedelta(days=60) #ye ham first_planned date de rhe hain apne milestones table ko
             db.add(project); db.flush()
             db.add_all([
-                Milestone(project_id=project.project_id, name="Site preparation", planned_date=project.start_date + timedelta(days=60), actual_date=project.start_date + timedelta(days=65), status="COMPLETED", sequence_no=1),
-                Milestone(project_id=project.project_id, name="Core construction", planned_date=today + timedelta(days=90), actual_date=None, status="IN_PROGRESS", sequence_no=2),
+                # changes
+                Milestone(project_id=project.project_id, name="Site preparation", planned_date=first_planned, actual_date=first_planned + timedelta(days=5), status="COMPLETED", sequence_no=1),
+                Milestone(project_id=project.project_id, name="Core construction", planned_date=today + timedelta(days=90), status="IN_PROGRESS", sequence_no=2),
                 ProgressReport(project_id=project.project_id, report_date=today, physical_progress_pct=progress, expenditure_cumulative=cost * progress / 100, remarks="Synthetic demo progress update."),
-                RiskScore(project_id=project.project_id, computed_at=datetime.now(UTC), health_score=round(100 - risk * 70), delay_probability=risk, cost_overrun_estimate=round(cost * max(0, risk - .2) * .2, 2), component_breakdown={"schedule": risk, "financial": round(min(1, risk * .85), 2), "progress": round(min(1, risk * .9), 2)}),
+                # changes
+                RiskScore(project_id=project.project_id, computed_at=datetime.now(UTC).replace(tzinfo=None), health_score=round(100 - risk * 70), delay_probability=risk, cost_overrun_estimate=round(cost * max(0, risk - .2) * .2, 2), component_breakdown={"schedule": risk, "financial": round(min(1, risk * .85), 2), "progress": round(min(1, risk * .9), 2)}),
             ])
             if risk >= .45:
-                db.add(Alert(project_id=project.project_id, alert_type="DELAY_RISK", severity="HIGH" if risk >= .67 else "MEDIUM", explanation_text="Synthetic demo alert based on the prototype risk score.", status="OPEN"))
+                # changes
+                alert = Alert(project_id=project.project_id, alert_type="DELAY_RISK", severity="HIGH" if risk >= .67 else "MEDIUM", explanation_text="Synthetic demo alert based on the prototype risk score.", status="OPEN")
+                db.add(alert)
+                db.flush()
+                db.add(Intervention(alert_id=alert.alert_id, assigned_to="Demo Officer", action_taken="Review project schedule and mitigation plan.", action_date=today, outcome_status="PENDING"))
+                # changes
+
+        # changes
+        db.flush()
+        db.add(AuditLog(user_id=demo_user.user_id, action_type="SEED", entity_type="PROJECT_DATASET", entity_id=1, details={"source": "synthetic_demo", "project_count": len(PROJECTS)}))
         db.commit()
-        print(f"Seeded {len(PROJECTS)} synthetic demo projects.")
+        # changes
+        print(f"Seeded {len(PROJECTS)} synthetic demo projects plus users, alerts, interventions and audit data.")
     finally:
         db.close()
 
