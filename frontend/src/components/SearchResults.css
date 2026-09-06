@@ -1,0 +1,378 @@
+/* =========================================================
+   Search Results - Design Tokens and Base Styles
+   ========================================================= */
+
+.searchresultssection {
+  --results-primary: #155eef;
+  --results-primary-hover: #1047b8;
+  --results-text: #172033;
+  --results-text-muted: #526077;
+  --results-border: #d9e0ea;
+  --results-background: #f4f7fb;
+  --results-surface: #ffffff;
+  --results-focus: #0b63ce;
+
+  box-sizing: border-box;
+  min-height: 100vh;
+  padding: 2rem 1.25rem 3rem;
+  background: var(--results-background);
+  color: var(--results-text);
+  font-family:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+  line-height: 1.5;
+}
+
+.searchresultssection *,
+.searchresultssection *::before,
+.searchresultssection *::after {
+  box-sizing: inherit;
+}
+.resultsearchbtn{
+   width: 82px;
+    height: 42px;
+
+    border: none;
+
+    border-radius: 2rem;
+
+    background: #f1f5f9;
+
+    font-size: 17px;
+
+    cursor: pointer;
+
+    transition: 0.25s ease;
+}
+/* =========================================================
+   Main Heading
+   ========================================================= */
+
+.searchresultsheading {
+  width: min(100%, 72rem);
+  margin: 0 auto 1.5rem;
+  color: var(--results-text);
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-weight: 750;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+}
+
+/* =========================================================
+   Results Card
+   ========================================================= */
+
+.searchresultscard {
+  width: min(100%, 72rem);
+  margin: 0 auto;
+  overflow: hidden;
+  background: var(--results-surface);
+  border: 1px solid var(--results-border);
+  border-radius: 0.875rem;
+  box-shadow: 0 0.5rem 1.5rem rgba(23, 32, 51, 0.08);
+}
+
+/* =========================================================
+   Top Bar
+   ========================================================= */
+ .resultsfilters{
+     width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 20px;
+    background: #adacbd;
+    border: 1px solid #a8b6d6;
+    border-radius: 14px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+    box-sizing: border-box;
+ }
+.resultstopbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 4.25rem;
+  padding: 1rem 1.5rem;
+  background: #fbfcfe;
+  border-bottom: 1px solid var(--results-border);
+}
+
+.resultsbrand {
+  display: inline-flex;
+  align-items: center;
+  min-width: 0;
+  color: var(--results-text);
+  font-size: 1.125rem;
+  font-weight: 750;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+}
+
+.resultsuser {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  min-width: 0;
+  color: var(--results-text-muted);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  text-align: right;
+}
+
+/* =========================================================
+   Results Content
+   ========================================================= */
+
+   .resultstablewrapper {
+    width: 100%;
+    overflow-x: auto;
+    border: 1px solid #d9e0ea;
+    border-radius: 8px;
+}
+
+.resultstable {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.resultstable th {
+    padding: 13px 14px;
+    background: #eef3f9;
+    border-bottom: 1px solid #d9e0ea;
+    border-right: 1px solid #d9e0ea;
+}
+
+.resultstable td {
+    padding: 14px;
+    border-bottom: 1px solid #e3e8ef;
+    border-right: 1px solid #e3e8ef;
+}
+.resultscontent {
+  padding: 2rem 1.5rem 2.25rem;
+}
+
+.resultsheader {
+  margin: 0 0 1.25rem;
+  color: var(--results-text);
+  font-size: clamp(1.25rem, 2vw, 1.625rem);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1.25;
+}
+
+.resultscontent p {
+  max-width: 68ch;
+  margin: 0 0 1rem;
+  color: var(--results-text-muted);
+  font-size: 1rem;
+}
+
+.resultscontent p:last-child {
+  margin-bottom: 0;
+}
+
+.resultscontent a {
+  color: var(--results-primary-hover);
+  font-weight: 600;
+  text-decoration-thickness: 0.1em;
+  text-underline-offset: 0.15em;
+}
+
+.resultscontent a:hover {
+  color: #0b358c;
+}
+
+/* =========================================================
+   Back Home Control
+   ========================================================= */
+
+/*
+  Supports both structures:
+  <button class="backhome">...</button>
+  and
+  <div class="backhome"><button>...</button></div>
+*/
+#sector{
+    width: 280px;
+    height: 42px;
+
+    padding: 0 14px;
+
+    border: 1px solid #d8dee8;
+    border-radius: 10px;
+
+    background: #ffffff;
+
+    color: #172b4d;
+
+    font-size: 14px;
+
+    outline: none;
+    cursor: pointer;
+
+    transition: 0.25s ease;
+}
+
+#sector select:focus {
+    border-color: #2563eb;
+
+    box-shadow:
+        0 0 0 3px rgba(37, 99, 235, 0.10);
+}
+
+#projectname {
+    width: 350px;
+    height: 42px;
+
+    padding: 0 16px;
+
+    border: 1px solid #d8dee8;
+    border-radius: 10px;
+
+    background: #f8fafc;
+
+    font-size: 14px;
+
+    outline: none;
+
+    transition: 0.25s ease;
+}
+
+#projectname::placeholder {
+    color: #8a94a6;
+}
+
+#projectname:focus {
+    background: #ffffff;
+
+    border-color: #2563eb;
+
+    box-shadow:
+        0 0 0 3px rgba(37, 99, 235, 0.10);
+}
+
+.backhome {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  padding: 0.7rem 1rem;
+  border: 0;
+  border-radius: 0.5rem;
+  background: var(--results-primary);
+  color: #ffffff;
+  font: inherit;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
+}
+
+.backhome button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.75rem;
+  padding: 0.7rem 1rem;
+  border: 0;
+  border-radius: 0.5rem;
+  background: var(--results-primary);
+  color: #ffffff;
+  font: inherit;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  line-height: 1.2;
+  cursor: pointer;
+  transition:
+    background-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
+}
+
+.backhome:hover,
+.backhome button:hover {
+  background: var(--results-primary-hover);
+  transform: translateY(-1px);
+}
+
+.backhome:focus-visible,
+.backhome button:focus-visible {
+  outline: 3px solid rgba(11, 99, 206, 0.35);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 1px var(--results-focus);
+}
+
+.backhome:active,
+.backhome button:active {
+  transform: translateY(0);
+}
+
+.backhome:disabled,
+.backhome button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* =========================================================
+   Responsive Layout
+   ========================================================= */
+
+@media (max-width: 640px) {
+  .searchresultssection {
+    padding: 1.25rem 0.875rem 2rem;
+  }
+
+  .searchresultsheading {
+    margin-bottom: 1.125rem;
+  }
+
+  .resultstopbar {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1rem;
+  }
+
+  .resultsuser {
+    justify-content: flex-start;
+    text-align: left;
+  }
+
+  .resultscontent {
+    padding: 1.5rem 1rem 1.75rem;
+  }
+
+  .backhome,
+  .backhome button {
+    width: 100%;
+  }
+}
+
+/* =========================================================
+   Reduced Motion
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .backhome,
+  .backhome button {
+    transition: none;
+  }
+
+  .backhome:hover,
+  .backhome button:hover,
+  .backhome:active,
+  .backhome button:active {
+    transform: none;
+  }
+}

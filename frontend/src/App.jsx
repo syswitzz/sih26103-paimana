@@ -1,11 +1,30 @@
-/** Frontend application placeholder. */
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import Dashboard from "./Components/Dashboard";
+import SearchResults from "./Components/SearchResults";
+import ProjectDetail from "./Components/ProjectDetail";
+
 function App() {
-  return (
-    <div>
-      <h1>PAIMANA</h1>
-      <p>React!</p>
-    </div>
-  );
+    return (
+        <BrowserRouter>
+            <Routes>
+
+                {/* Default page */}
+                <Route path="/" element={<Dashboard />} />
+
+                {/* Search results page */}
+                <Route
+                    path="/search-results"
+                    element={<SearchResults />}
+                />
+                <Route
+                    path="/project-detail"
+                    element={<ProjectDetail />}
+                />
+
+            </Routes>
+        </BrowserRouter>
+    );
 }
 
 export default App;
