@@ -1,7 +1,9 @@
 """Populate the PAIMANA AI PostgreSQL database with synthetic demo data."""
+
+'''
 from datetime import UTC, date, datetime, timedelta
 
-from app.database.database import Base, SessionLocal, engine
+from app.database.database import SessionLocal
 from app.models.models import Alert, AuditLog, Intervention, Milestone, ProgressReport, Project, RiskScore, User
 
 PROJECTS = [
@@ -21,7 +23,6 @@ PROJECTS = [
 
 
 def main():
-    Base.metadata.create_all(bind=engine)
     db = SessionLocal()
     try:
         if db.query(Project).first():
@@ -36,7 +37,7 @@ def main():
 
         for index, (name, sector, ministry, state, district, cost, status, progress, risk) in enumerate(PROJECTS, 1):
             project = Project(
-                name=name, sector=sector, ministry=ministry, state=state, district=district,
+                name=name, sector=sector, ministry=ministry, implementing_agency="UNSPECIFIED", state=state, district=district,
                 sanctioned_cost=cost, revised_cost=cost * (1.12 if risk >= .67 else 1.02),
                 start_date=today - timedelta(days=600 - index * 20),
                 planned_end_date=today + timedelta(days=365 + index * 20),
@@ -52,7 +53,7 @@ def main():
                 Milestone(project_id=project.project_id, name="Site preparation", planned_date=first_planned, actual_date=first_planned + timedelta(days=5), status="COMPLETED", sequence_no=1),
                 Milestone(project_id=project.project_id, name="Core construction", planned_date=today + timedelta(days=90), status="IN_PROGRESS", sequence_no=2),
                 ProgressReport(project_id=project.project_id, report_date=today, physical_progress_pct=progress, expenditure_cumulative=cost * progress / 100, remarks="Synthetic demo progress update."),
-                RiskScore(project_id=project.project_id, computed_at=datetime.now(UTC).replace(tzinfo=None), health_score=round(100 - risk * 70), delay_probability=risk, cost_overrun_estimate=round(cost * max(0, risk - .2) * .2, 2), component_breakdown={"schedule": risk, "financial": round(min(1, risk * .85), 2), "progress": round(min(1, risk * .9), 2)}),
+                RiskScore(project_id=project.project_id, computed_at=datetime.now(UTC).replace(tzinfo=None), health_score=round(100 - risk * 70), risk_score=round(risk * 100, 2), risk_level="HIGH" if risk >= .67 else "MEDIUM" if risk >= .34 else "LOW", delay_probability=risk, cost_overrun_probability=risk, cost_overrun_estimate=round(cost * max(0, risk - .2) * .2, 2), component_breakdown={"schedule": risk, "financial": round(min(1, risk * .85), 2), "progress": round(min(1, risk * .9), 2)}, model_version="seed-demo"),
             ])
 
             if risk >= .45:
@@ -76,3 +77,12 @@ def main():
 
 if __name__ == "__main__":
     main()
+'''
+
+
+"""Populate PostgreSQL with the primary Projects_Report.csv dataset."""
+from import_projects import import_dataset
+
+
+if __name__ == "__main__":
+    print(f"Imported {import_dataset(replace=True)} rows from the primary project dataset.")

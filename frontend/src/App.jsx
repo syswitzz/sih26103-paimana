@@ -1,8 +1,8 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import Dashboard from "./Components/Dashboard";
-import SearchResults from "./Components/SearchResults";
-import ProjectDetail from "./Components/ProjectDetail";
+import Dashboard from "./components/Dashboard";
+import SearchResults from "./components/SearchResults";
+import ProjectDetail from "./components/ProjectDetail";
 
 function App() {
     return (

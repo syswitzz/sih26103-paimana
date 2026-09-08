@@ -41,6 +41,7 @@
 .project-title h1 {
     margin: 5px 0 0;
     font-size: 25px;
+    font-weight: 700;
 }
 
 /* RISK BADGE */
@@ -82,6 +83,185 @@
 .project-detail-content h2 {
     font-size: 19px;
     margin-bottom: 15px;
+}
+
+.ai-intelligence-section {
+    padding: 22px;
+    border: 1px solid #cbd8f4;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #f5f8ff 0%, #ffffff 60%);
+    box-shadow: 0 8px 24px rgba(49, 94, 251, 0.08);
+}
+
+.ai-section-heading {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 18px;
+}
+
+.ai-eyebrow {
+    color: #315efb;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.ai-section-heading h2 {
+    margin: 5px 0 4px;
+    font-size: 22px;
+}
+
+.ai-section-heading p {
+    margin: 0;
+    color: #667085;
+    font-size: 13px;
+}
+
+.ai-status {
+    padding: 8px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.ai-status.high { background: #ffe4e4; color: #c62828; }
+.ai-status.medium { background: #fff0cf; color: #a66a00; }
+.ai-status.low { background: #dff5e5; color: #23833c; }
+
+.ai-intelligence-card {
+    display: grid;
+    grid-template-columns: minmax(180px, 0.8fr) 1.4fr;
+    gap: 20px;
+}
+
+.ai-summary,
+.ai-breakdown,
+.ai-metric {
+    background: #ffffff;
+    border: 1px solid #e0e7f2;
+    border-radius: 10px;
+}
+
+.ai-summary {
+    padding: 18px;
+}
+
+.ai-summary > span,
+.ai-metric span,
+.ai-breakdown-header span {
+    color: #667085;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.ai-summary strong {
+    display: block;
+    margin-top: 7px;
+    color: #172033;
+    font-size: 38px;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.03em;
+}
+
+.ai-summary strong small,
+.ai-metric strong small {
+    margin-left: 3px;
+    color: #8792a5;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.ai-summary p {
+    margin: 12px 0 0;
+    color: #526077;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.ai-metrics {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.ai-metric {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 7px;
+    padding: 14px;
+}
+
+.ai-metric strong {
+    color: #172033;
+    font-size: 22px;
+    font-variant-numeric: tabular-nums;
+}
+
+.ai-breakdown {
+    grid-column: 1 / -1;
+    padding: 16px;
+}
+
+.ai-breakdown-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.ai-breakdown-header small {
+    color: #8792a5;
+    font-size: 11px;
+}
+
+.ai-breakdown-row {
+    display: grid;
+    grid-template-columns: 120px 1fr 42px;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+    color: #526077;
+    font-size: 12px;
+    text-transform: capitalize;
+}
+
+.ai-breakdown-row strong {
+    color: #172033;
+    text-align: right;
+}
+
+.ai-breakdown-track {
+    height: 7px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: #e8edf5;
+}
+
+.ai-breakdown-fill {
+    height: 100%;
+    border-radius: inherit;
+    background: #315efb;
+}
+
+.ai-unavailable {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 18px;
+    border: 1px dashed #cbd5e1;
+    border-radius: 10px;
+    background: #ffffff;
+    color: #667085;
+    font-size: 13px;
+}
+
+.ai-unavailable strong {
+    color: #172033;
+    font-size: 15px;
 }
 
 
@@ -317,6 +497,18 @@
 
     .risk-details {
         gap: 30px;
+    }
+
+    .ai-intelligence-card {
+        grid-template-columns: 1fr;
+    }
+
+    .ai-breakdown {
+        grid-column: auto;
+    }
+
+    .ai-breakdown-row {
+        grid-template-columns: 95px 1fr 38px;
     }
 
     .officer-card {

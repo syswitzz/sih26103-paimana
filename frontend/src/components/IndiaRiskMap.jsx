@@ -1,36 +1,27 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import IndiaMap from "@react-map/india";
 import "./IndiaRiskMap.css";
+import { getErrorMessage, getStateRisks } from "../services/api";
 
 function IndiaRiskMap() {
 
     const [selectedState, setSelectedState] = useState(null);
+    const [riskData, setRiskData] = useState({});
+    const [error, setError] = useState(null);
 
-    // Dummy data for now
-    const riskData = {
-        Maharashtra: "high",
-        Gujarat: "medium",
-        Rajasthan: "low",
-        Karnataka: "high",
-        TamilNadu: "medium",
-        Kerala: "low",
-        Telangana: "high",
-        AndhraPradesh: "medium",
-        Odisha: "high",
-        WestBengal: "medium",
-        Bihar: "high",
-        UttarPradesh: "high",
-        Punjab: "low",
-        Haryana: "medium",
-        MadhyaPradesh: "high",
-        Chhattisgarh: "medium",
-        Jharkhand: "high",
-        Assam: "low",
-        Delhi: "medium"
-    };
+    useEffect(() => {
+        getStateRisks()
+            .then((states) => {
+                setRiskData(Object.fromEntries(states.map((item) => [
+                    item.state.replace(/\s+/g, ""),
+                    item,
+                ])));
+            })
+            .catch((err) => setError(getErrorMessage(err)));
+    }, []);
 
     const getRiskClass = (state) => {
-        return riskData[state] || "no-data";
+        return riskData[state]?.risk_level?.toLowerCase() || "no-data";
     };
 
     const handleStateHover = (state) => {
@@ -102,10 +93,16 @@ function IndiaRiskMap() {
                             </b>
                         </span>
 
+                        {riskData[selectedState] && (
+                            <span>{riskData[selectedState].project_count} projects</span>
+                        )}
+
                     </div>
                 )}
 
             </div>
+
+            {error && <p className="maperror">{error}</p>}
 
         </div>
     );

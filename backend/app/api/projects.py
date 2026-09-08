@@ -3,8 +3,8 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.database.database import get_db
-from app.models.models import Project
-from app.schemas.schemas import ProjectCreate, ProjectRead
+from app.models.models import Project, RiskScore
+from app.schemas.schemas import ProjectCreate, ProjectListItem, ProjectRead, RiskScoreRead
 
 router = APIRouter(prefix="/api/projects", tags=["Projects"])
 
@@ -16,16 +16,38 @@ def get_project_or_404(project_id: int, db: Session) -> Project:
     return project
 
 
-@router.get("", response_model=list[ProjectRead])
+@router.get("", response_model=list[ProjectListItem])
 def list_projects(
-    ministry: str | None = None, sector: str | None = None, state: str | None = None,
+    name: str | None = None, ministry: str | None = None, sector: str | None = None, state: str | None = None,
     status: str | None = None, db: Session = Depends(get_db),
 ):
     statement = select(Project)
+    if name:
+        statement = statement.where(Project.name.ilike(f"%{name}%"))
     for field, value in ((Project.ministry, ministry), (Project.sector, sector), (Project.state, state), (Project.current_status, status)):
         if value:
             statement = statement.where(field == value)
-    return db.scalars(statement.order_by(Project.project_id)).all()
+    projects = db.scalars(statement.order_by(Project.project_id)).all()
+    result = []
+    for project in projects:
+        latest_risk = db.scalars(
+            select(RiskScore)
+            .where(RiskScore.project_id == project.project_id)
+            .order_by(RiskScore.computed_at.desc())
+            .limit(1)
+        ).first()
+        result.append({
+            "project_id": project.project_id,
+            "name": project.name,
+            "ministry": project.ministry,
+            "sector": project.sector,
+            "state": project.state,
+            "district": project.district,
+            "current_status": project.current_status,
+            "size_bucket": project.size_bucket,
+            "latest_risk": RiskScoreRead.model_validate(latest_risk) if latest_risk else None,
+        })
+    return result
 
 
 @router.get("/{project_id}", response_model=ProjectRead)

@@ -8,7 +8,7 @@
 body {
     font-family: "Segoe UI", Arial, sans-serif;
     background: #f4f7fb;
-    color: #172b4d;
+    color: #172033;
 }
 
 
@@ -149,6 +149,16 @@ nav button:hover {
 
     transform: translateY(-2px);
 }
+
+.header-icon-button svg {
+    width: 20px;
+    height: 20px;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.8;
+}
 #search{
      width: 82px;
     height: 42px;
@@ -177,8 +187,8 @@ nav button:hover {
     align-items: center;
     gap: 14px;
     padding: 18px 20px;
-    background: #adacbd;
-    border: 1px solid #a8b6d6;
+    background: #eef3f9;
+    border: 1px solid #d9e2ee;
     border-radius: 14px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
     box-sizing: border-box;
@@ -187,8 +197,16 @@ nav button:hover {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #7094df;
-    width: 6rem;
+    background-color: #315efb;
+    color: #ffffff;
+    width: auto;
+    padding: 0 16px;
+    font-size: 14px;
+    font-weight: 600;
+}
+#riskbtn:hover {
+    background-color: #244bd1;
+    transform: translateY(-1px);
 
 }
 /* ==========================================
@@ -286,6 +304,18 @@ main {
     transition:
         transform 0.25s ease,
         box-shadow 0.25s ease;
+}
+
+.total.cost h1,
+.expenditure h1 {
+    display: flex;
+    align-items: baseline;
+    gap: 5px;
+    color: #172033;
+    font-size: clamp(1.35rem, 2vw, 1.75rem);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
+    white-space: nowrap;
 }
 
 

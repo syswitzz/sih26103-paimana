@@ -1,3 +1,0 @@
-# Frontend
-
-Frontend application scaffold.

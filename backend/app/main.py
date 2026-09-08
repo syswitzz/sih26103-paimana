@@ -1,23 +1,16 @@
-from contextlib import asynccontextmanager
-
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.api import alerts, dashboard, milestones, progress, projects, risks
-from app.database.database import Base, engine
-import app.models.models  # noqa: F401 - registers ORM tables before create_all
+from app.config import settings
+import app.models.models  # noqa: F401 - registers ORM models
 
 
-@asynccontextmanager
-async def lifespan(_: FastAPI):
-    Base.metadata.create_all(bind=engine)
-    yield
-
-
-app = FastAPI(title="PAIMANA AI API", version="0.1.0", lifespan=lifespan)
+app = FastAPI(title="PAIMANA AI API", version="0.1.0")
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://localhost:5173"],
+    allow_origins=settings.cors_origins,
+    allow_origin_regex=r"https?://(localhost|127\.0\.0\.1)(:\d+)?$",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

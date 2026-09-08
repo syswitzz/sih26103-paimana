@@ -21,9 +21,9 @@ st.set_page_config(
 # FILE PATHS
 # -----------------------------
 BASE_DIR = Path(__file__).resolve().parent
-DATA_FILE = BASE_DIR / "Projects_Report(2).csv"
-COST_MODEL_FILE = BASE_DIR / "cost_model(1).pkl"
-DELAY_MODEL_FILE = BASE_DIR / "delay_model(1).pkl"
+DATA_FILE = BASE_DIR / "data" / "Projects_Report.csv"
+COST_MODEL_FILE = BASE_DIR / "models" / "cost_model.pkl"
+DELAY_MODEL_FILE = BASE_DIR / "models" / "delay_model.pkl"
 
 
 # -----------------------------
