@@ -1,51 +1,153 @@
-# Paimana
+# Setup
 
-Initial project scaffold for an infrastructure project-risk platform.
+## Prerequisites
 
-The repository intentionally contains only the basic folders and placeholder
-files. Add the API, ML pipeline, and frontend implementation as the project
-develops.
+- Git
+- Node.js 20.19+ and npm (Vite 8 / React 19)
+- Python 3.12 (managed by uv)
+- uv 0.9+
+- PostgreSQL (local install)
 
+## 1. Clone Repository
 
-# PAIMANA AI backend
+```bash
+git clone <repository-url>
+cd <repository-folder>
+```
 
-PAIMANA AI is a Smart India Hackathon prototype for monitoring infrastructure projects and surfacing early-warning risks. This backend is intentionally a small, readable FastAPI and PostgreSQL foundation.
+The repository root contains three top-level directories: `backend/`, `frontend/`, and `ml/`.
 
-## Stack
+## 2. PostgreSQL Setup
 
-Python 3.11+, FastAPI, SQLAlchemy 2.x, Pydantic, PostgreSQL, Psycopg, and Uvicorn.
+```bash
+# Start PostgreSQL
+sudo systemctl start postgresql
 
-## Run locally
+# Verify it is running
+sudo systemctl status postgresql --no-pager
+
+# Create the paimana database
+sudo -u postgres createdb paimana
+
+# (Optional) Set a password on the postgres superuser, or create a dedicated role
+sudo -u postgres psql -c "ALTER USER postgres PASSWORD 'CHANGE_ME';"
+
+# Verify the database exists
+sudo -u postgres psql -d paimana -c "SELECT 1;"
+```
+
+The connection credentials above must match `DATABASE_URL` in `backend/.env` (see Section 3). The role used in `DATABASE_URL` needs access to the `paimana` database.
+
+## 3. Backend Setup
 
 ```bash
 cd backend
-python -m venv .venv
-# Windows: .venv\Scripts\activate
-# Linux/macOS:
-source .venv/bin/activate
-pip install -r requirements.txt
-
-# Create the PostgreSQL database once (adjust the role if needed)
-createdb paimana
-
-# Configure a non-default connection if required
-export DATABASE_URL='postgresql+psycopg://postgres:postgres@localhost:5432/paimana'
-
-python seed.py
-uvicorn app.main:app --reload
+uv sync
 ```
 
-The connection string is read from `DATABASE_URL`; see `.env.example` for the default local value. The target PostgreSQL database must exist, while the application creates all tables automatically at startup. `seed.py` adds 12 clearly synthetic/demo projects and associated records; it is safe to run repeatedly. API documentation is at [http://localhost:8000/docs](http://localhost:8000/docs).
+The backend reads configuration from `backend/.env`. Create it if it does not exist yet, based on the following template (use your own password, not a real one from the repository):
 
-## Endpoints
+```dotenv
+# PostgreSQL connection string
+DATABASE_URL=postgresql+psycopg://postgres:CHANGE_ME@localhost:5432/paimana
 
-- `GET`, `POST` `/api/projects`; `GET /api/projects/{project_id}` (list filters: `ministry`, `sector`, `state`, `status`)
-- `GET`, `POST` `/api/projects/{project_id}/milestones`
-- `GET`, `POST` `/api/projects/{project_id}/progress`
-- `GET /api/projects/{project_id}/risk` (latest score)
-- `GET /api/alerts`; `GET`, `POST` `/api/projects/{project_id}/alerts` (filters: `severity`, `status`, `alert_type`)
-- `GET /api/dashboard/summary`; `GET /health`
+# Comma-separated browser origins. Do not include a trailing slash.
+CORS_ORIGINS=http://localhost:5173
+ENVIRONMENT=development
 
-## Tables
+# Paths are relative to the repository root unless absolute.
+PROJECT_DATASET_PATH=../ml/data/Projects_Report.csv
+ML_COST_MODEL_PATH=../ml/models/cost_model.pkl
+ML_DELAY_MODEL_PATH=../ml/models/delay_model.pkl
+ML_MODEL_VERSION=sih-rf-v1
+```
 
-`projects`, `milestones`, `progress_reports`, `risk_scores`, `alerts`, `interventions`, `users`, and `audit_log`.
+`DATABASE_URL` format: `postgresql+psycopg://USER:PASSWORD@HOST:PORT/paimana`.
+
+## 4. Database Migration
+
+```bash
+cd backend
+uv run alembic upgrade head
+```
+
+This creates all tables (and the `project_overview` view) in the `paimana` database.
+
+## 5. Import Dataset
+
+```bash
+cd backend
+uv run python import_projects.py
+```
+
+This reads `ml/data/Projects_Report.csv`, upserts all projects and progress reports, derives `State`/`District`, and computes and persists a real ML risk score (`RiskScore`) for every project.
+
+Re-running safely without wiping existing data:
+
+```bash
+uv run python import_projects.py --append
+```
+
+## 6. Start Backend
+
+```bash
+cd backend
+uv run uvicorn app.main:app --reload
+```
+
+- Backend URL: http://localhost:8000
+- API docs: http://localhost:8000/docs
+- Health check: http://localhost:8000/health
+
+## 7. Frontend Setup
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+- Frontend URL: http://localhost:5173
+
+## 8. ML
+
+- Models: `ml/models/cost_model.pkl`, `ml/models/delay_model.pkl`
+- Dataset: `ml/data/Projects_Report.csv`
+- Notebook: `ml/notebooks/risk_pridiction.ipynb`
+- The backend loads the `.pkl` models automatically through `App.services.ml`; no separate ML server is required.
+
+## 9. Full Startup Order
+
+Run each command in its own terminal.
+
+Terminal 1 — PostgreSQL:
+
+```bash
+sudo systemctl start postgresql
+```
+
+Terminal 2 — Backend (run once before first start: `uv run alembic upgrade head` and `uv run python import_projects.py`):
+
+```bash
+cd backend
+uv run uvicorn app.main:app --reload
+```
+
+Terminal 3 — Frontend:
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+## 10. Common Errors
+
+| Error | Fix |
+| --- | --- |
+| `Is the server running on host "localhost"` / connection refused | Start PostgreSQL: `sudo systemctl start postgresql` |
+| `database "paimana" does not exist` | Create it: `sudo -u postgres createdb paimana` |
+| `password authentication failed` | Set the DB role password: `sudo -u postgres psql -c "ALTER USER postgres PASSWORD 'CHANGE_ME';"` and update `DATABASE_URL` in `backend/.env` |
+| `relation "projects" does not exist` | Run migrations: `cd backend && uv run alembic upgrade head` |
+| Frontend fails to install/build | Use Node 20.19+ and reinstall: `cd frontend && rm -rf node_modules package-lock.json && npm install` |
+| `joblib`/model file not found at startup | Confirm `ml/models/cost_model.pkl` and `ml/models/delay_model.pkl` exist and match `ML_COST_MODEL_PATH` / `ML_DELAY_MODEL_PATH` in `backend/.env` |
