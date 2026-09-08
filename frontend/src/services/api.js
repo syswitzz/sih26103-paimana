@@ -97,6 +97,13 @@ export async function getProjects(params = {}) {
 }
 
 /**
+ * Get the unique list of sectors available in the project dataset
+ */
+export async function getSectors() {
+  return fetchAPI("/projects/sectors");
+}
+
+/**
  * Get a single project by ID
  */
 export async function getProject(projectId) {

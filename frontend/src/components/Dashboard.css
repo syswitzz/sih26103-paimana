@@ -40,13 +40,19 @@ nav {
 
 /* Logo */
 
+nav a {
+    display: inline-flex;
+    align-items: center;
+    margin-right: auto;
+}
+
 nav img {
     width: 150px;
     height: auto;
 
     object-fit: contain;
 
-    margin-right: auto;
+    cursor: pointer;
 }
 
 
@@ -150,6 +156,13 @@ nav button:hover {
     transform: translateY(-2px);
 }
 
+.header-icon-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
 .header-icon-button svg {
     width: 20px;
     height: 20px;
@@ -158,6 +171,7 @@ nav button:hover {
     stroke-linecap: round;
     stroke-linejoin: round;
     stroke-width: 1.8;
+    display: block;
 }
 #search{
      width: 82px;

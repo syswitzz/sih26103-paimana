@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from '../Static/logo.png';
 import "./Dashboard.css";
 import IndiaRiskMap from "./IndiaRiskMap";
@@ -10,7 +10,7 @@ import {
     Tooltip,
     Legend
 } from "chart.js";
-import { getDashboardSummary, getErrorMessage } from "../services/api";
+import { getDashboardSummary, getSectors, getErrorMessage } from "../services/api";
 
 // Register Chart.js components
 ChartJS.register(
@@ -24,6 +24,7 @@ function Dashboard() {
 
     const [projectName, setProjectName] = useState("");
     const [sector, setSector] = useState("");
+    const [sectors, setSectors] = useState([]);
     const [dashboardData, setDashboardData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -52,6 +53,10 @@ function Dashboard() {
         };
 
         fetchDashboard();
+    }, []);
+
+    useEffect(() => {
+        getSectors().then(setSectors).catch(() => setSectors([]));
     }, []);
 
     function handleSearch() {
@@ -102,7 +107,7 @@ function Dashboard() {
         return (
             <>
                 <nav>
-                    <img src={logo} alt="PAIMANA Logo"></img>
+                    <Link to="/"><img src={logo} alt="PAIMANA Logo"></img></Link>
                     <button id="riskbtn"><strong>+ Predict Risk</strong></button>
                     <button className="header-icon-button" aria-label="Open user account" title="User account">
                         <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -120,7 +125,7 @@ function Dashboard() {
     return (
         <>
             <nav>
-                <img src={logo} alt="PAIMANA Logo"></img>
+                <Link to="/"><img src={logo} alt="PAIMANA Logo"></img></Link>
                 <button id="riskbtn"><strong>+ Predict Risk</strong></button>
                 <button className="header-icon-button" aria-label="Open user account" title="User account">
                     <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -150,10 +155,9 @@ function Dashboard() {
                     value={sector}
                     onChange={(e) => setSector(e.target.value)}>
                     <option value="">All Sectors</option>
-                    <option value="Roads">Roads</option>
-                    <option value="Power">Power</option>
-                    <option value="Railways">Railways</option>
-                    <option value="Irrigation">Irrigation</option>
+                    {sectors.map((name) => (
+                        <option key={name} value={name}>{name}</option>
+                    ))}
                 </select>
 
                 <label>Search project</label>

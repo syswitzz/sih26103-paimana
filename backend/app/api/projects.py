@@ -3,6 +3,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.database.database import get_db
+from app.locations import UNSPECIFIED
 from app.models.models import Project, RiskScore
 from app.schemas.schemas import ProjectCreate, ProjectListItem, ProjectRead, RiskScoreRead
 
@@ -48,6 +49,13 @@ def list_projects(
             "latest_risk": RiskScoreRead.model_validate(latest_risk) if latest_risk else None,
         })
     return result
+
+
+@router.get("/sectors")
+def list_sectors(db: Session = Depends(get_db)):
+    return db.scalars(
+        select(Project.sector).where(Project.sector != UNSPECIFIED).distinct().order_by(Project.sector)
+    ).all()
 
 
 @router.get("/{project_id}", response_model=ProjectRead)

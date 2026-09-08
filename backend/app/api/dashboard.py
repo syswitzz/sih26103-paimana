@@ -3,6 +3,7 @@ from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
 from app.database.database import get_db
+from app.locations import UNSPECIFIED
 from app.models.models import Alert, Project, ProgressReport, RiskScore
 
 router = APIRouter(prefix="/api/dashboard", tags=["Dashboard"])
@@ -39,6 +40,7 @@ def state_risks(db: Session = Depends(get_db)):
             func.avg(latest.c.risk_score),
         )
         .outerjoin(latest, latest.c.project_id == Project.project_id)
+        .where(Project.state != UNSPECIFIED)
         .group_by(Project.state)
         .order_by(Project.state)
     )

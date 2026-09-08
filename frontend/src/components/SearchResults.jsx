@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import logo from "../Static/logo.png";
 import "./SearchResults.css";
-import { getProjects, getErrorMessage } from "../services/api";
+import { getProjects, getSectors, getErrorMessage } from "../services/api";
 
 function SearchResults() {
     const navigate = useNavigate();
@@ -11,6 +11,7 @@ function SearchResults() {
     const [projectData, setProjectData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [sectors, setSectors] = useState([]);
     const [filterSector, setFilterSector] = useState(location.state?.sector || "");
     const [searchText, setSearchText] = useState(location.state?.projectName || "");
 
@@ -40,6 +41,10 @@ function SearchResults() {
         fetchProjects();
     }, [searchText, filterSector]);
 
+    useEffect(() => {
+        getSectors().then(setSectors).catch(() => setSectors([]));
+    }, []);
+
     // Helper to get risk level display name
     const getRiskLevelDisplay = (riskLevel) => {
         if (!riskLevel) return "Unknown";
@@ -59,7 +64,7 @@ function SearchResults() {
         <section className="searchresultssection">
             <header className="resultstopbar">
                 <div className="resultstitle">
-                    <img src={logo} alt="PAIMANA Logo" />
+                    <Link to="/"><img src={logo} alt="PAIMANA Logo" /></Link>
                     <span>Project Search</span>
                 </div>
                 <button className="resultsuser" aria-label="Open user account" title="User account">
@@ -109,10 +114,9 @@ function SearchResults() {
                                 id="sector"
                             >
                                 <option value="">All Sectors</option>
-                                <option value="Roads">Roads</option>
-                                <option value="Railways">Railways</option>
-                                <option value="Power">Power</option>
-                                <option value="Irrigation">Irrigation</option>
+                                {sectors.map((name) => (
+                                    <option key={name} value={name}>{name}</option>
+                                ))}
                             </select>
                         </div>
 

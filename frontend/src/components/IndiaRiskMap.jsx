@@ -9,11 +9,13 @@ function IndiaRiskMap() {
     const [riskData, setRiskData] = useState({});
     const [error, setError] = useState(null);
 
+    const normalizeKey = (state) => (state || "").replace(/\s+/g, "");
+
     useEffect(() => {
         getStateRisks()
             .then((states) => {
                 setRiskData(Object.fromEntries(states.map((item) => [
-                    item.state.replace(/\s+/g, ""),
+                    normalizeKey(item.state),
                     item,
                 ])));
             })
@@ -21,7 +23,7 @@ function IndiaRiskMap() {
     }, []);
 
     const getRiskClass = (state) => {
-        return riskData[state]?.risk_level?.toLowerCase() || "no-data";
+        return riskData[normalizeKey(state)]?.risk_level?.toLowerCase() || "no-data";
     };
 
     const handleStateHover = (state) => {
@@ -93,8 +95,8 @@ function IndiaRiskMap() {
                             </b>
                         </span>
 
-                        {riskData[selectedState] && (
-                            <span>{riskData[selectedState].project_count} projects</span>
+                        {riskData[normalizeKey(selectedState)] && (
+                            <span>{riskData[normalizeKey(selectedState)].project_count} projects</span>
                         )}
 
                     </div>

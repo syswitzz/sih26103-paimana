@@ -16,6 +16,13 @@
     border-bottom: 1px solid #e5e9f0;
 }
 
+.project-detail-logo {
+    width: 150px;
+    height: auto;
+    object-fit: contain;
+    cursor: pointer;
+}
+
 .back-button {
     border: none;
     background: #eef2f7;

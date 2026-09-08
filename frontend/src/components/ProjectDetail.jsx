@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import "./ProjectDetail.css";
+import logo from "../Static/logo.png";
 import { getProject, getMilestones, getProgress, getRisk, getErrorMessage } from "../services/api";
 
 function ProjectDetail() {
@@ -125,6 +126,10 @@ function ProjectDetail() {
 
             {/* HEADER */}
             <header className="project-detail-header">
+
+                <Link to="/">
+                    <img className="project-detail-logo" src={logo} alt="PAIMANA Logo" />
+                </Link>
 
                 <button
                     className="back-button"

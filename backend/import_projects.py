@@ -8,7 +8,9 @@ from sqlalchemy import delete, select
 
 from app.config import settings
 from app.database.database import SessionLocal
+from app.locations import UNSPECIFIED, detect_location
 from app.models.models import AuditLog, Alert, Intervention, Milestone, ProgressReport, Project, RiskScore, User
+from app.services.risks import build_risk_score
 
 
 DATE_FORMAT = "%d-%m-%Y"
@@ -56,13 +58,15 @@ def map_row(row: dict[str, str]) -> tuple[dict, date, Decimal, Decimal]:
     else:
         status = "IN_PROGRESS"
 
+    state, district = detect_location(row["Project Name"])
+
     project = {
         "name": text(row["Project Name"], 255),
         "sector": text(row["Sector Name"], 100),
         "ministry": text(row["Line Ministry"], 150),
         "implementing_agency": text(row["Implementing Agency"], 200),
-        "state": UNKNOWN,
-        "district": UNKNOWN,
+        "state": state or UNSPECIFIED,
+        "district": district or UNSPECIFIED,
         "sanctioned_cost": sanctioned_cost,
         "revised_cost": revised_cost,
         "start_date": start_date,
@@ -124,6 +128,15 @@ def import_dataset(replace: bool = True) -> int:
                 report.physical_progress_pct = progress
                 report.expenditure_cumulative = expenditure
                 report.remarks = "Imported from Projects_Report.csv."
+
+            latest_progress = db.scalars(
+                select(ProgressReport)
+                .where(ProgressReport.project_id == project.project_id)
+                .order_by(ProgressReport.report_date.desc())
+                .limit(1)
+            ).first()
+            db.execute(delete(RiskScore).where(RiskScore.project_id == project.project_id))
+            db.add(build_risk_score(project, latest_progress))
             imported += 1
 
         db.commit()
