@@ -33,8 +33,8 @@ def get_settings() -> Settings:
         cors_origins=[origin.strip() for origin in origins.split(",") if origin.strip()],
         environment=os.getenv("ENVIRONMENT", "development"),
         dataset_path=_path("PROJECT_DATASET_PATH", "../ml/data/Projects_Report.csv"),
-        cost_model_path=_path("ML_COST_MODEL_PATH", "../ml/models/cost_model.pkl"),
-        delay_model_path=_path("ML_DELAY_MODEL_PATH", "../ml/models/delay_model.pkl"),
+        cost_model_path=_path("ML_COST_MODEL_PATH", "models/cost_model.pkl"),
+        delay_model_path=_path("ML_DELAY_MODEL_PATH", "models/delay_model.pkl"),
         model_version=os.getenv("ML_MODEL_VERSION", "sih-rf-v1"),
     )
 
