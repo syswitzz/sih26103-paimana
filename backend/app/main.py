@@ -9,7 +9,7 @@ import app.models.models  # noqa: F401 - registers ORM models
 app = FastAPI(title="PAIMANA AI API", version="0.1.0")
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.cors_origins,
+    allow_origins=["*"],
     allow_origin_regex=r"https?://(localhost|127\.0\.0\.1)(:\d+)?$",
     allow_credentials=True,
     allow_methods=["*"],
