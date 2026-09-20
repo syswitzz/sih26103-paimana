@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import "./ProjectDetail.css";
-import logo from "../Static/logo.png";
+import logo from "../Static/logo.jpeg";
 import { getProject, getMilestones, getProgress, getRisk, getErrorMessage } from "../services/api";
 
 function ProjectDetail() {
@@ -325,7 +325,7 @@ function ProjectDetail() {
                 <section className="ai-intelligence-section">
                     <div className="ai-section-heading">
                         <div>
-                            <span className="ai-eyebrow">PAIMANA Intelligence</span>
+                            <span className="ai-eyebrow">PRAGATI Intelligence</span>
                             <h2>AI Project Intelligence</h2>
                             <p>Model-backed signals generated from this project's latest data.</p>
                         </div>
@@ -383,6 +383,20 @@ function ProjectDetail() {
                                         <strong>{(Number(value) * 100).toFixed(0)}%</strong>
                                     </div>
                                 ))}
+                            </div>
+                            <div className="ai-explanation">
+                                <div className="ai-explanation-header">
+                                    <span>✨</span>
+                                    <div>
+                                        <span>AI ANALYSIS</span>
+                                        <h3>Why is this project at risk?</h3>
+                                    </div>
+                                </div>
+
+                                <p>
+                                    {riskData.explanation ||
+                                        "AI explanation will appear here when model analysis is available."}
+                                </p>
                             </div>
                         </div>
                     ) : (

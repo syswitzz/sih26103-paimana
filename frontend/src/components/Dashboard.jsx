@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import logo from '../Static/logo.jpeg';
+import logo from "../Static/logo.jpeg";
 import "./Dashboard.css";
 import IndiaRiskMap from "./IndiaRiskMap";
 import { Doughnut } from "react-chartjs-2";

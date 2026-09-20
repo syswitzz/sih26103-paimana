@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import logo from "../Static/logo.png";
+import logo from "../Static/logo.jpeg";
 import "./SearchResults.css";
 import { getProjects, getSectors, getErrorMessage } from "../services/api";
 
