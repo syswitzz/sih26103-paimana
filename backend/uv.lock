@@ -85,7 +85,6 @@ requires-dist = [
     { name = "pandas", specifier = ">=2.2" },
     { name = "psycopg", extras = ["binary"] },
     { name = "pydantic", specifier = ">=2.13.5" },
-    { name = "python-dotenv", specifier = ">=1.0" },
     { name = "python-dotenv", specifier = ">=1.2.3" },
     { name = "scikit-learn", specifier = "==1.7.2" },
     { name = "sqlalchemy", specifier = ">=2.0.52" },

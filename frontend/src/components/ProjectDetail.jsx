@@ -384,20 +384,8 @@ function ProjectDetail() {
                                     </div>
                                 ))}
                             </div>
-                            <div className="ai-explanation">
-                                <div className="ai-explanation-header">
-                                    <span>✨</span>
-                                    <div>
-                                        <span>AI ANALYSIS</span>
-                                        <h3>Why is this project at risk?</h3>
-                                    </div>
-                                </div>
 
-                                <p>
-                                    {riskData.explanation ||
-                                        "AI explanation will appear here when model analysis is available."}
-                                </p>
-                            </div>
+                            
                         </div>
                     ) : (
                         <div className="ai-unavailable">
