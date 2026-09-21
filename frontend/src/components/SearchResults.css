@@ -487,7 +487,7 @@
     #projectname {
         width: 100%;
         min-width: 0;
-        height: 44px;
+        height: 52px;
     }
 
     .resultsearchbtn {
@@ -653,7 +653,7 @@
     #projectname,
     .resultsearchbtn {
         width: 100%;
-        height: 44px;
+        height: 52px;
         min-width: 0;
     }
 
@@ -763,7 +763,7 @@
     #sector,
     #projectname,
     .resultsearchbtn {
-        height: 42px;
+        height: 52px;
     }
 
     .resultscontent {
@@ -810,7 +810,7 @@
     #sector,
     #projectname,
     .resultsearchbtn {
-        height: 40px;
+        height: 52px;
         font-size: 13px;
     }
 
