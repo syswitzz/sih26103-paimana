@@ -78,13 +78,26 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 14px;
-    padding: 18px 20px;
+    gap: 16px;
+    padding: 22px 26px;
     background: #eef3f9;
     border: 1px solid #d9e2ee;
-    border-radius: 14px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+    border-radius: 16px;
+    box-shadow: 0 6px 22px rgba(23, 43, 77, 0.08);
     box-sizing: border-box;
+ }
+
+ .resultfilter {
+     display: flex;
+     flex-direction: column;
+     gap: 6px;
+ }
+
+ .resultfilter label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #172b4d;
+    white-space: nowrap;
  }
 .resultstopbar {
   display: flex;
@@ -238,19 +251,20 @@
   <div class="backhome"><button>...</button></div>
 */
 #sector{
-    width: 280px;
-    height: 42px;
+    width: 300px;
+    height: 50px;
 
-    padding: 0 14px;
+    padding: 0 16px;
 
-    border: 1px solid #d8dee8;
-    border-radius: 10px;
+    border: 2px solid #c3cfdf;
+    border-radius: 12px;
 
     background: #ffffff;
 
     color: #172b4d;
 
-    font-size: 14px;
+    font-size: 15px;
+    font-weight: 500;
 
     outline: none;
     cursor: pointer;
@@ -258,25 +272,31 @@
     transition: 0.25s ease;
 }
 
-#sector :focus {
+#sector:hover {
+    border-color: #2563eb;
+    box-shadow:
+        0 0 0 3px rgba(37, 99, 235, 0.07);
+}
+
+#sector:focus {
     border-color: #2563eb;
 
     box-shadow:
-        0 0 0 3px rgba(37, 99, 235, 0.10);
+        0 0 0 3px rgba(37, 99, 235, 0.14);
 }
 
 #projectname {
-    width: 350px;
-    height: 42px;
+    width: 370px;
+    height: 50px;
 
-    padding: 0 16px;
+    padding: 0 18px;
 
-    border: 1px solid #d8dee8;
-    border-radius: 10px;
+    border: 2px solid #c3cfdf;
+    border-radius: 12px;
 
     background: #f8fafc;
 
-    font-size: 14px;
+    font-size: 15px;
 
     outline: none;
 
@@ -287,13 +307,17 @@
     color: #8a94a6;
 }
 
+#projectname:hover {
+    border-color: #2563eb;
+}
+
 #projectname:focus {
     background: #ffffff;
 
     border-color: #2563eb;
 
     box-shadow:
-        0 0 0 3px rgba(37, 99, 235, 0.10);
+        0 0 0 3px rgba(37, 99, 235, 0.14);
 }
 
 .backhome {
