@@ -366,3 +366,457 @@
   transform: none;
 }
 
+
+/* =========================================================
+   RESPONSIVE DESIGN
+   PAIMANA SEARCH RESULTS
+   ========================================================= */
+
+
+/* =========================================================
+   TABLET / SMALL LAPTOP
+   ========================================================= */
+
+@media (max-width: 1000px) {
+
+    .searchresultssection {
+        padding: 1.75rem 1rem 2.5rem;
+    }
+
+    .searchresultsheading,
+    .searchresultscard {
+        width: min(100%, 68rem);
+    }
+
+    /* Search/filter area */
+
+    .resultsfilters {
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        gap: 12px;
+        padding: 15px;
+    }
+
+    #sector {
+        width: 240px;
+    }
+
+    #projectname {
+        width: 280px;
+    }
+
+    .resultsearchbtn {
+        flex-shrink: 0;
+    }
+
+    /* Top bar */
+
+    .resultstopbar {
+        padding: 0.9rem 1.25rem;
+    }
+
+    .resultstitle img {
+        width: 125px;
+    }
+
+    /* Content */
+
+    .resultscontent {
+        padding: 1.5rem 1.25rem 2rem;
+    }
+
+    .resultstable th,
+    .resultstable td {
+        padding: 12px;
+    }
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 750px) {
+
+    .searchresultssection {
+        padding: 1.5rem 0.85rem 2rem;
+    }
+
+    .searchresultsheading {
+        margin-bottom: 1rem;
+        font-size: clamp(1.6rem, 5vw, 2rem);
+    }
+
+    /* -----------------------------------------
+       FILTER / SEARCH AREA
+       ----------------------------------------- */
+
+    .resultsfilters {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        width: 100%;
+        gap: 10px;
+        padding: 14px;
+    }
+
+    #sector,
+    #projectname {
+        width: 100%;
+        min-width: 0;
+        height: 44px;
+    }
+
+    .resultsearchbtn {
+        width: 40%;
+        height: 44px;
+    }
+
+    /* -----------------------------------------
+       TOP BAR
+       ----------------------------------------- */
+
+    .resultstopbar {
+        flex-wrap: wrap;
+        min-height: auto;
+        padding: 0.85rem 1rem;
+        gap: 12px;
+    }
+
+    .resultstitle {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .resultstitle img {
+        width: 115px;
+    }
+
+    .resultstitle span {
+        font-size: 0.8rem;
+        padding-left: 10px;
+    }
+
+    .resultsuser {
+        width: 38px;
+        height: 38px;
+    }
+
+    /* -----------------------------------------
+       CONTENT
+       ----------------------------------------- */
+
+    .resultscontent {
+        padding: 1.25rem 1rem 1.75rem;
+    }
+
+    .resultsheader {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+    }
+
+    /* -----------------------------------------
+       TABLE
+       ----------------------------------------- */
+
+    .resultstablewrapper {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .resultstable {
+        min-width: 700px;
+    }
+
+    .resultstable th,
+    .resultstable td {
+        padding: 11px 12px;
+        font-size: 0.9rem;
+        white-space: nowrap;
+    }
+
+    /* Back button */
+
+    .backhome {
+        min-height: 42px;
+        padding: 0.65rem 0.9rem;
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    .searchresultssection {
+        min-height: 100vh;
+        padding: 1rem 10px 1.5rem;
+    }
+
+    /* -----------------------------------------
+       MAIN HEADING
+       ----------------------------------------- */
+
+    .searchresultsheading {
+        width: 100%;
+        margin-bottom: 0.85rem;
+        font-size: clamp(1.45rem, 7vw, 1.85rem);
+        line-height: 1.2;
+    }
+
+    /* -----------------------------------------
+       CARD
+       ----------------------------------------- */
+
+    .searchresultscard {
+        width: 100%;
+        border-radius: 12px;
+    }
+
+    /* -----------------------------------------
+       TOP BAR
+       ----------------------------------------- */
+
+    .resultstopbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.8rem;
+        gap: 8px;
+    }
+
+    .resultstitle {
+        gap: 8px;
+    }
+
+    .resultstitle img {
+        width: 100px;
+    }
+
+    .resultstitle span {
+        display: none;
+    }
+
+    .resultsbrand {
+        font-size: 1rem;
+    }
+
+    .resultsuser {
+        width: 38px;
+        height: 38px;
+        flex-shrink: 0;
+    }
+
+    /* -----------------------------------------
+       SEARCH FILTERS
+       ----------------------------------------- */
+
+    .resultsfilters {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+        gap: 9px;
+        padding: 12px;
+        border-radius: 10px;
+    }
+
+    #sector,
+    #projectname,
+    .resultsearchbtn {
+        width: 100%;
+        height: 44px;
+        min-width: 0;
+    }
+
+    #sector,
+    #projectname {
+        font-size: 14px;
+    }
+
+    .resultsearchbtn {
+        font-size: 16px;
+    }
+
+    /* -----------------------------------------
+       CONTENT
+       ----------------------------------------- */
+
+    .resultscontent {
+        padding: 1rem 0.8rem 1.5rem;
+    }
+
+    .resultsheader {
+        width: 100%;
+        margin-bottom: 0.8rem;
+        font-size: 1.2rem;
+    }
+
+    .resultscontent p {
+        font-size: 0.9rem;
+    }
+
+    /* -----------------------------------------
+       TABLE
+       ----------------------------------------- */
+
+    .resultstablewrapper {
+        border-radius: 8px;
+        overflow-x: auto;
+    }
+
+    /*
+       Keep table readable instead of squeezing
+       every column into a tiny phone screen.
+    */
+
+    .resultstable {
+        min-width: 680px;
+    }
+
+    .resultstable th {
+        padding: 11px 10px;
+        font-size: 0.8rem;
+    }
+
+    .resultstable td {
+        padding: 11px 10px;
+        font-size: 0.85rem;
+    }
+
+    /* -----------------------------------------
+       BACK HOME BUTTON
+       ----------------------------------------- */
+
+    .backhome,
+    .backhome button {
+        width: 100%;
+        min-height: 44px;
+    }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 400px) {
+
+    .searchresultssection {
+        padding: 0.75rem 8px 1.25rem;
+    }
+
+    .searchresultsheading {
+        font-size: 1.4rem;
+    }
+
+    .searchresultscard {
+        border-radius: 10px;
+    }
+
+    .resultstopbar {
+        padding: 0.7rem;
+    }
+
+    .resultstitle img {
+        width: 92px;
+    }
+
+    .resultsuser {
+        width: 36px;
+        height: 36px;
+        border-radius: 9px;
+    }
+
+    .resultsfilters {
+        padding: 10px;
+    }
+
+    #sector,
+    #projectname,
+    .resultsearchbtn {
+        height: 42px;
+    }
+
+    .resultscontent {
+        padding: 0.85rem 0.65rem 1.25rem;
+    }
+
+    .resultsheader {
+        font-size: 1.1rem;
+    }
+
+    .resultscontent p {
+        font-size: 0.85rem;
+    }
+
+    .resultstable {
+        min-width: 650px;
+    }
+}
+
+
+/* =========================================================
+   VERY SMALL PHONES
+   ========================================================= */
+
+@media (max-width: 340px) {
+
+    .searchresultssection {
+        padding-left: 6px;
+        padding-right: 6px;
+    }
+
+    .searchresultsheading {
+        font-size: 1.3rem;
+    }
+
+    .resultstitle img {
+        width: 85px;
+    }
+
+    .resultsfilters {
+        padding: 8px;
+    }
+
+    #sector,
+    #projectname,
+    .resultsearchbtn {
+        height: 40px;
+        font-size: 13px;
+    }
+
+    .resultscontent {
+        padding-left: 0.55rem;
+        padding-right: 0.55rem;
+    }
+}
+
+
+/* =========================================================
+   TOUCH DEVICES
+   ========================================================= */
+
+@media (hover: none) and (pointer: coarse) {
+
+    .backhome,
+    .backhome button,
+    .resultsearchbtn,
+    .resultsuser {
+        min-height: 44px;
+    }
+
+    .backhome:hover,
+    .backhome button:hover {
+        transform: none;
+    }
+
+    .resultsearchbtn:hover {
+        transform: none;
+    }
+}
+

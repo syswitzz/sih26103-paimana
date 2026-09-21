@@ -468,57 +468,730 @@
 }
 
 
-/* RESPONSIVE */
 
-@media (max-width: 800px) {
+/* =========================================================
+   RESPONSIVE DESIGN
+   PAIMANA PROJECT DETAIL PAGE
+   ========================================================= */
+
+
+/* =========================================================
+   TABLET / SMALL LAPTOP
+   ========================================================= */
+
+@media (max-width: 1000px) {
 
     .project-detail-header {
-        padding: 20px;
-        flex-wrap: wrap;
+        padding: 20px 25px;
+        gap: 18px;
     }
 
-    .project-title {
-        order: 2;
-        width: 100%;
+    .project-detail-logo {
+        width: 130px;
     }
 
-    .project-info-grid,
+    .project-title h1 {
+        font-size: 22px;
+    }
+
+    .project-detail-content {
+        width: min(94%, 1200px);
+    }
+
+    /* Project information */
+
+    .project-info-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 18px;
+    }
+
+    /* Financial cards */
+
     .cost-cards {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
     }
 
-    .timeline-card {
-        flex-direction: column;
-        align-items: flex-start;
+    /* AI section */
+
+    .ai-intelligence-card {
+        grid-template-columns: minmax(160px, 0.7fr) 1.3fr;
     }
 
-    .timeline-line {
-        width: 100%;
-    }
+    /* Risk */
 
     .risk-card {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 25px;
+        gap: 35px;
     }
 
     .risk-details {
-        gap: 30px;
+        gap: 35px;
+    }
+
+    /* Officer */
+
+    .officer-card {
+        gap: 20px;
+    }
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+    .project-detail-page {
+        padding-bottom: 35px;
+    }
+
+    /* -----------------------------------------
+       HEADER
+       ----------------------------------------- */
+
+    .project-detail-header {
+        padding: 16px 20px;
+        flex-wrap: wrap;
+        gap: 14px;
+    }
+
+    .project-detail-logo {
+        width: 120px;
+    }
+
+    .back-button {
+        padding: 9px 14px;
+        font-size: 13px;
+    }
+
+    .project-title {
+        order: 3;
+        width: 100%;
+        flex-basis: 100%;
+    }
+
+    .project-title span {
+        font-size: 12px;
+    }
+
+    .project-title h1 {
+        font-size: 21px;
+        line-height: 1.3;
+    }
+
+    .risk-badge {
+        margin-left: auto;
+        padding: 8px 13px;
+        font-size: 12px;
+    }
+
+
+    /* -----------------------------------------
+       MAIN CONTENT
+       ----------------------------------------- */
+
+    .project-detail-content {
+        width: calc(100% - 32px);
+        margin: 22px auto;
+    }
+
+    .project-detail-content section {
+        margin-bottom: 20px;
+    }
+
+    .project-detail-content h2 {
+        font-size: 18px;
+        margin-bottom: 12px;
+    }
+
+
+    /* -----------------------------------------
+       AI INTELLIGENCE
+       ----------------------------------------- */
+
+    .ai-intelligence-section {
+        padding: 18px;
+        border-radius: 12px;
+    }
+
+    .ai-section-heading {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .ai-status {
+        align-self: flex-start;
     }
 
     .ai-intelligence-card {
         grid-template-columns: 1fr;
+        gap: 14px;
     }
 
     .ai-breakdown {
         grid-column: auto;
     }
 
-    .ai-breakdown-row {
-        grid-template-columns: 95px 1fr 38px;
+    .ai-summary strong {
+        font-size: 34px;
     }
+
+    .ai-metrics {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .ai-breakdown-row {
+        grid-template-columns: 100px 1fr 40px;
+    }
+
+
+    /* -----------------------------------------
+       PROJECT INFORMATION
+       ----------------------------------------- */
+
+    .project-info-card,
+    .description-card,
+    .officer-card,
+    .timeline-card,
+    .progress-card,
+    .risk-card {
+        padding: 20px;
+    }
+
+    .project-info-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 18px;
+    }
+
+
+    /* -----------------------------------------
+       FINANCIAL
+       ----------------------------------------- */
+
+    .cost-cards {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 14px;
+    }
+
+    .cost-card {
+        padding: 18px;
+    }
+
+    .cost-card h3 {
+        font-size: 19px;
+    }
+
+
+    /* -----------------------------------------
+       TIMELINE
+       ----------------------------------------- */
+
+    .timeline-card {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 14px;
+    }
+
+    .timeline-line {
+        width: 100%;
+        height: 2px;
+        flex: none;
+    }
+
+    .timeline-item {
+        gap: 5px;
+    }
+
+
+    /* -----------------------------------------
+       RISK
+       ----------------------------------------- */
+
+    .risk-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 22px;
+    }
+
+    .risk-details {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 18px;
+    }
+
+    .risk-score strong {
+        font-size: 38px;
+    }
+
+
+    /* -----------------------------------------
+       ADMINISTRATION
+       ----------------------------------------- */
 
     .officer-card {
         grid-template-columns: 1fr;
+        gap: 18px;
     }
 }
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    .project-detail-page {
+        min-height: 100vh;
+        padding-bottom: 25px;
+    }
+
+
+    /* -----------------------------------------
+       HEADER
+       ----------------------------------------- */
+
+    .project-detail-header {
+        padding: 12px 14px;
+        gap: 10px;
+    }
+
+    .project-detail-logo {
+        width: 105px;
+    }
+
+    .back-button {
+        padding: 8px 12px;
+        border-radius: 7px;
+        font-size: 12px;
+    }
+
+    .project-title {
+        order: 3;
+        width: 100%;
+    }
+
+    .project-title span {
+        font-size: 11px;
+    }
+
+    .project-title h1 {
+        margin-top: 4px;
+        font-size: clamp(18px, 5vw, 21px);
+        line-height: 1.3;
+        overflow-wrap: anywhere;
+    }
+
+    .risk-badge {
+        padding: 7px 11px;
+        border-radius: 18px;
+        font-size: 11px;
+        white-space: nowrap;
+    }
+
+
+    /* -----------------------------------------
+       MAIN
+       ----------------------------------------- */
+
+    .project-detail-content {
+        width: calc(100% - 20px);
+        margin: 18px auto;
+    }
+
+    .project-detail-content section {
+        margin-bottom: 17px;
+    }
+
+    .project-detail-content h2 {
+        font-size: 17px;
+        margin-bottom: 10px;
+    }
+
+
+    /* -----------------------------------------
+       AI INTELLIGENCE
+       ----------------------------------------- */
+
+    .ai-intelligence-section {
+        padding: 15px;
+        border-radius: 11px;
+    }
+
+    .ai-eyebrow {
+        font-size: 10px;
+    }
+
+    .ai-section-heading h2 {
+        font-size: 19px;
+    }
+
+    .ai-section-heading p {
+        font-size: 12px;
+        line-height: 1.5;
+    }
+
+    .ai-status {
+        padding: 7px 10px;
+        font-size: 11px;
+    }
+
+    .ai-intelligence-card {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .ai-summary {
+        padding: 15px;
+    }
+
+    .ai-summary strong {
+        font-size: 32px;
+    }
+
+    .ai-summary p {
+        margin-top: 9px;
+        font-size: 12px;
+    }
+
+    .ai-metrics {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+    }
+
+    .ai-metric {
+        padding: 12px;
+        gap: 5px;
+    }
+
+    .ai-metric strong {
+        font-size: 19px;
+    }
+
+    .ai-metric span,
+    .ai-summary > span,
+    .ai-breakdown-header span {
+        font-size: 11px;
+    }
+
+    .ai-breakdown {
+        padding: 13px;
+    }
+
+    .ai-breakdown-header {
+        margin-bottom: 10px;
+    }
+
+    .ai-breakdown-row {
+        grid-template-columns: 75px 1fr 35px;
+        gap: 7px;
+        font-size: 11px;
+    }
+
+    .ai-breakdown-track {
+        height: 6px;
+    }
+
+    .ai-unavailable {
+        padding: 14px;
+        font-size: 12px;
+    }
+
+
+    /* -----------------------------------------
+       COMMON CARDS
+       ----------------------------------------- */
+
+    .project-info-card,
+    .description-card,
+    .officer-card,
+    .timeline-card,
+    .progress-card,
+    .risk-card {
+        padding: 16px;
+        border-radius: 11px;
+    }
+
+
+    /* -----------------------------------------
+       PROJECT INFORMATION
+       ----------------------------------------- */
+
+    .project-info-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .info-item {
+        gap: 4px;
+    }
+
+    .info-item span,
+    .cost-card span,
+    .timeline-item span,
+    .risk-status span,
+    .officer-card span {
+        font-size: 12px;
+    }
+
+    .info-item strong {
+        font-size: 14px;
+        overflow-wrap: anywhere;
+    }
+
+
+    /* -----------------------------------------
+       FINANCIAL
+       ----------------------------------------- */
+
+    .cost-cards {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .cost-card {
+        padding: 16px;
+        border-radius: 11px;
+    }
+
+    .cost-card h3 {
+        margin-top: 7px;
+        font-size: 19px;
+    }
+
+
+    /* -----------------------------------------
+       PROGRESS
+       ----------------------------------------- */
+
+    .progress-card {
+        gap: 18px;
+    }
+
+    .progress-heading {
+        margin-bottom: 7px;
+    }
+
+    .progress-heading span {
+        font-size: 13px;
+    }
+
+    .progress-bar {
+        height: 8px;
+    }
+
+
+    /* -----------------------------------------
+       TIMELINE
+       ----------------------------------------- */
+
+    .timeline-card {
+        gap: 12px;
+    }
+
+    .timeline-item {
+        gap: 4px;
+    }
+
+    .timeline-item strong {
+        font-size: 14px;
+    }
+
+
+    /* -----------------------------------------
+       RISK
+       ----------------------------------------- */
+
+    .risk-card {
+        gap: 18px;
+    }
+
+    .risk-score {
+        gap: 5px;
+    }
+
+    .risk-score strong {
+        font-size: 34px;
+    }
+
+    .risk-score span {
+        font-size: 13px;
+    }
+
+    .risk-details {
+        grid-template-columns: 1fr;
+        gap: 13px;
+    }
+
+    .risk-status {
+        gap: 4px;
+    }
+
+
+    /* -----------------------------------------
+       DESCRIPTION
+       ----------------------------------------- */
+
+    .description-card p {
+        font-size: 13px;
+        line-height: 1.65;
+    }
+
+
+    /* -----------------------------------------
+       ADMINISTRATION
+       ----------------------------------------- */
+
+    .officer-card {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .officer-card div {
+        gap: 5px;
+    }
+}
+
+
+/* =========================================================
+   SMALL PHONES
+   ========================================================= */
+
+@media (max-width: 400px) {
+
+    .project-detail-header {
+        padding: 10px 11px;
+    }
+
+    .project-detail-logo {
+        width: 95px;
+    }
+
+    .back-button {
+        padding: 7px 10px;
+        font-size: 11px;
+    }
+
+    .risk-badge {
+        padding: 6px 9px;
+        font-size: 10px;
+    }
+
+    .project-detail-content {
+        width: calc(100% - 16px);
+        margin-top: 15px;
+    }
+
+    .ai-intelligence-section {
+        padding: 13px;
+    }
+
+    .ai-section-heading h2 {
+        font-size: 18px;
+    }
+
+    .ai-metrics {
+        grid-template-columns: 1fr;
+    }
+
+    .ai-metric {
+        padding: 11px;
+    }
+
+    .ai-breakdown {
+        padding: 11px;
+    }
+
+    .ai-breakdown-row {
+        grid-template-columns: 65px 1fr 32px;
+        gap: 6px;
+        font-size: 10px;
+    }
+
+    .project-info-card,
+    .description-card,
+    .officer-card,
+    .timeline-card,
+    .progress-card,
+    .risk-card {
+        padding: 14px;
+    }
+
+    .cost-card {
+        padding: 14px;
+    }
+
+    .risk-score strong {
+        font-size: 31px;
+    }
+}
+
+
+/* =========================================================
+   VERY SMALL PHONES
+   ========================================================= */
+
+@media (max-width: 340px) {
+
+    .project-detail-header {
+        padding: 9px;
+    }
+
+    .project-detail-logo {
+        width: 88px;
+    }
+
+    .project-title h1 {
+        font-size: 17px;
+    }
+
+    .project-detail-content {
+        width: calc(100% - 12px);
+    }
+
+    .ai-intelligence-section {
+        padding: 11px;
+    }
+
+    .ai-summary {
+        padding: 13px;
+    }
+
+    .ai-summary strong {
+        font-size: 29px;
+    }
+
+    .ai-breakdown-row {
+        grid-template-columns: 58px 1fr 30px;
+        gap: 5px;
+    }
+
+    .project-info-card,
+    .description-card,
+    .officer-card,
+    .timeline-card,
+    .progress-card,
+    .risk-card,
+    .cost-card {
+        padding: 12px;
+    }
+}
+
+
+/* =========================================================
+   TOUCH DEVICES
+   ========================================================= */
+
+@media (hover: none) and (pointer: coarse) {
+
+    .back-button {
+        min-height: 42px;
+    }
+
+    .back-button:hover {
+        background: #eef2f7;
+    }
+}
+
