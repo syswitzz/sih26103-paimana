@@ -1,13 +1,62 @@
-from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy import select
+from datetime import datetime
+
+from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException
+from sqlalchemy import exists, select
 from sqlalchemy.orm import Session
 
-from app.database.database import get_db
+from app.database.database import SessionLocal, get_db
 from app.locations import UNSPECIFIED
-from app.models.models import Project, RiskScore
+from app.models.models import ProgressReport, Project, RiskScore
 from app.schemas.schemas import ProjectCreate, ProjectListItem, ProjectRead, RiskScoreRead
+from app.services.risks import build_risk_score
 
 router = APIRouter(prefix="/api/projects", tags=["Projects"])
+
+# In-memory job tracking for the batch prediction action.
+# Suitable for the single-process development/demo backend.
+_predict_job = {
+    "status": "idle",  # idle | running | done | error
+    "total": 0,
+    "updated": 0,
+    "error": None,
+    "started_at": None,
+    "finished_at": None,
+}
+
+
+def _run_all_predictions():
+    """Compute and persist a risk score for every project that is still missing one."""
+    try:
+        _predict_job.update(status="running", error=None, started_at=datetime.utcnow().isoformat())
+        db = SessionLocal()
+        try:
+            scored = select(RiskScore.project_id)
+            projects = db.scalars(
+                select(Project)
+                .where(~exists(scored.where(RiskScore.project_id == Project.project_id)))
+                .order_by(Project.project_id)
+            ).all()
+            _predict_job["total"] = len(projects)
+            updated = 0
+            for project in projects:
+                progress = db.scalars(
+                    select(ProgressReport)
+                    .where(ProgressReport.project_id == project.project_id)
+                    .order_by(ProgressReport.report_date.desc())
+                    .limit(1)
+                ).first()
+                db.add(build_risk_score(project, progress))
+                updated += 1
+            db.commit()
+            _predict_job["updated"] = updated
+            _predict_job["status"] = "done"
+        finally:
+            db.close()
+    except Exception as exc:  # pragma: no cover - defensive
+        _predict_job["status"] = "error"
+        _predict_job["error"] = str(exc)
+    finally:
+        _predict_job["finished_at"] = datetime.utcnow().isoformat()
 
 
 def get_project_or_404(project_id: int, db: Session) -> Project:
@@ -56,6 +105,28 @@ def list_sectors(db: Session = Depends(get_db)):
     return db.scalars(
         select(Project.sector).where(Project.sector != UNSPECIFIED).distinct().order_by(Project.sector)
     ).all()
+
+
+@router.post("/risk/predict", status_code=202)
+def predict_all_risks(background_tasks: BackgroundTasks):
+    """Queue a background run that computes risk scores for projects still missing one."""
+    if _predict_job["status"] == "running":
+        raise HTTPException(status_code=409, detail="A risk prediction run is already in progress")
+    background_tasks.add_task(_run_all_predictions)
+    return {"status": "started"}
+
+
+@router.get("/risk/predict/status")
+def predict_all_risks_status():
+    """Check the progress of the batch risk prediction job."""
+    return {
+        "status": _predict_job["status"],
+        "total": _predict_job["total"],
+        "updated": _predict_job["updated"],
+        "error": _predict_job["error"],
+        "started_at": _predict_job["started_at"],
+        "finished_at": _predict_job["finished_at"],
+    }
 
 
 @router.get("/{project_id}", response_model=ProjectRead)

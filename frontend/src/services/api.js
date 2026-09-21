@@ -184,6 +184,26 @@ export async function generateRisk(projectId, riskData = {}) {
   });
 }
 
+/**
+ * Compute risk scores for projects that do not have one yet (e.g. projects
+ * added after the CSV was imported). Runs in the background; returns
+ * immediately with a "started" status.
+ * @returns {Promise<{status: string}>}
+ */
+export async function predictAllRisks() {
+  return fetchAPI("/projects/risk/predict", {
+    method: "POST",
+  });
+}
+
+/**
+ * Check the progress of the batch risk prediction job
+ * @returns {Promise<{status: string, total: number, updated: number, error: string|null}>}
+ */
+export async function predictRiskStatus() {
+  return fetchAPI("/projects/risk/predict/status");
+}
+
 // ============================================================
 // Alerts Endpoints
 // ============================================================

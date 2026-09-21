@@ -243,6 +243,11 @@ nav button:hover {
     transform: translateY(-1px);
 
 }
+#riskbtn:disabled {
+    background-color: #93a6f7;
+    cursor: not-allowed;
+    transform: none;
+}
 /* ==========================================
    MAIN
 ========================================== */
@@ -621,4 +626,265 @@ main {
    RESPONSIVE — MOBILE
 ========================================== */
 
-@media (max-width: 850px) { nav { height: auto; min-height: 72px; padding: 14px 20px; flex-wrap: wrap; gap: 12px; } nav img { width: 130px; } .searchbox { order: 5; width: 100%; flex-wrap: wrap; padding: 14px; } #sector, #projectname { flex: 1 1 220px; width: auto; } #search { flex: 0 0 70px; } main { padding: 28px 20px 40px; } .firstsection { gap: 16px; } .Total.projects, .Revised.cost, .cumulative.expenditure, .Avg.physical.progress { min-height: 140px; padding: 20px; } .progress.health.overview, .liveproject { min-height: 400px; padding: 22px; } } /* ========================================== MOBILE ========================================== */ @media (max-width: 600px) { /* ---------- NAVBAR ---------- */ nav { padding: 12px 15px; gap: 10px; } nav img { width: 120px; } nav a { margin-right: auto; } nav label { display: none; } /* Search area becomes a vertical mobile-friendly layout */ .searchbox { display: grid; grid-template-columns: 1fr; gap: 10px; padding: 14px; border-radius: 12px; } #sector, #projectname, #search, #riskbtn { width: 100%; min-width: 0; } #sector, #projectname { height: 44px; } #search, #riskbtn { height: 44px; } /* ---------- MAIN ---------- */ main { padding: 22px 14px 35px; } /* ---------- WELCOME ---------- */ .firstsection > h1 { font-size: clamp(22px, 6vw, 27px); margin-bottom: 2px; } /* ---------- KPI CARDS ---------- */ .firstsection { grid-template-columns: 1fr; gap: 14px; } .Total.projects, .Revised.cost, .cumulative.expenditure, .Avg.physical.progress { width: 100%; min-height: 125px; padding: 18px; border-radius: 14px; } .Total.projects > h1, .Revised.cost > h1, .cumulative.expenditure > h1, .Avg.physical.progress > h1 { width: 46px; height: 46px; font-size: 20px; border-radius: 12px; } /* ---------- CHARTS ---------- */ .chartsection { grid-template-columns: 1fr; gap: 16px; } .progress.health.overview, .liveproject { width: 100%; min-height: 340px; padding: 20px; border-radius: 15px; } .progress.health.overview h1, .liveproject h1 { font-size: 18px; } .risk-chart { height: 240px; } } /* ========================================== SMALL PHONES ========================================== */ @media (max-width: 400px) { nav { padding: 10px 12px; } nav img { width: 105px; } nav button { width: 38px; height: 38px; font-size: 15px; } main { padding: 18px 10px 30px; } .searchbox { padding: 12px; gap: 8px; } #sector, #projectname, #search, #riskbtn { height: 42px; font-size: 13px; } .firstsection { gap: 12px; } .Total.projects, .Revised.cost, .cumulative.expenditure, .Avg.physical.progress { min-height: 115px; padding: 15px; } .Total.projects > h1, .Revised.cost > h1, .cumulative.expenditure > h1, .Avg.physical.progress > h1 { width: 42px; height: 42px; font-size: 18px; } .progress.health.overview, .liveproject { min-height: 300px; padding: 16px; } .risk-chart { height: 210px; } } /* ========================================== VERY SMALL PHONES ========================================== */ @media (max-width: 340px) { nav img { width: 95px; } main { padding-left: 8px; padding-right: 8px; } .Total.projects, .Revised.cost, .cumulative.expenditure, .Avg.physical.progress { padding: 13px; } .progress.health.overview, .liveproject { padding: 14px; } }
+@media (max-width: 850px) {
+    nav {
+        height: auto;
+        min-height: 72px;
+        padding: 14px 20px;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    nav img {
+        width: 130px;
+    }
+
+    .searchbox {
+        order: 5;
+        width: 100%;
+        flex-wrap: wrap;
+        padding: 14px;
+    }
+
+    #sector, #projectname {
+        flex: 1 1 220px;
+        width: auto;
+    }
+
+    #search {
+        flex: 0 0 70px;
+    }
+
+    main {
+        padding: 28px 20px 40px;
+    }
+
+    .firstsection {
+        gap: 16px;
+    }
+
+    .Total.projects, .Revised.cost, .cumulative.expenditure, .Avg.physical.progress {
+        min-height: 140px;
+        padding: 20px;
+    }
+
+    .progress.health.overview, .liveproject {
+        min-height: 400px;
+        padding: 22px;
+    }
+}
+
+
+/* ==========================================
+   PHONES
+========================================== */
+
+@media (max-width: 600px) {
+
+    /* ---------- NAVBAR ---------- */
+    nav {
+        padding: 12px 15px;
+        gap: 10px;
+    }
+
+    nav img {
+        width: 120px;
+    }
+
+    nav a {
+        margin-right: auto;
+    }
+
+    nav label {
+        display: none;
+    }
+
+    /* ---------- SEARCH AREA ----------
+       Keep the sector / project / search controls
+       in one compact row instead of three full-width
+       stacked boxes. A 16px font size also stops iOS
+       Safari from zooming in on focus. */
+    .searchbox {
+        display: grid;
+        grid-template-columns: minmax(96px, 30%) minmax(0, 1fr) 50px;
+        gap: 8px;
+        align-items: center;
+        width: 100%;
+        padding: 10px;
+        border-radius: 14px;
+    }
+
+    .searchbox label {
+        display: none;
+    }
+
+    #sector, #projectname {
+        width: 100%;
+        min-width: 0;
+        height: 44px;
+        font-size: 16px;
+    }
+
+    #search {
+        width: 50px;
+        min-width: 0;
+        height: 44px;
+        font-size: 20px;
+    }
+
+    #riskbtn {
+        width: auto;
+    }
+
+    /* ---------- MAIN ---------- */
+    main {
+        padding: 22px 14px 35px;
+    }
+
+    /* ---------- WELCOME ---------- */
+    .firstsection > h1 {
+        font-size: clamp(22px, 6vw, 27px);
+        margin-bottom: 2px;
+    }
+
+    /* ---------- KPI CARDS ---------- */
+    .firstsection {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .Total.projects, .Revised.cost, .cumulative.expenditure, .Avg.physical.progress {
+        width: 100%;
+        min-height: 125px;
+        padding: 18px;
+        border-radius: 14px;
+    }
+
+    .Total.projects > h1, .Revised.cost > h1, .cumulative.expenditure > h1, .Avg.physical.progress > h1 {
+        width: 46px;
+        height: 46px;
+        font-size: 20px;
+        border-radius: 12px;
+    }
+
+    /* ---------- CHARTS ---------- */
+    .chartsection {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .progress.health.overview, .liveproject {
+        width: 100%;
+        min-height: 340px;
+        padding: 20px;
+        border-radius: 15px;
+    }
+
+    .progress.health.overview h1, .liveproject h1 {
+        font-size: 18px;
+    }
+
+    .risk-chart {
+        height: 240px;
+    }
+}
+
+
+/* ==========================================
+   SMALL PHONES
+========================================== */
+
+@media (max-width: 400px) {
+    nav {
+        padding: 10px 12px;
+    }
+
+    nav img {
+        width: 105px;
+    }
+
+    nav button {
+        width: 38px;
+        height: 38px;
+        font-size: 15px;
+    }
+
+    main {
+        padding: 18px 10px 30px;
+    }
+
+    .searchbox {
+        grid-template-columns: minmax(88px, 32%) minmax(0, 1fr) 46px;
+        gap: 6px;
+        padding: 10px;
+    }
+
+    #sector, #projectname, #search, #riskbtn {
+        height: 42px;
+        font-size: 16px;
+    }
+
+    #search {
+        width: 46px;
+        font-size: 18px;
+    }
+
+    .firstsection {
+        gap: 12px;
+    }
+
+    .Total.projects, .Revised.cost, .cumulative.expenditure, .Avg.physical.progress {
+        min-height: 115px;
+        padding: 15px;
+    }
+
+    .Total.projects > h1, .Revised.cost > h1, .cumulative.expenditure > h1, .Avg.physical.progress > h1 {
+        width: 42px;
+        height: 42px;
+        font-size: 18px;
+        border-radius: 12px;
+    }
+
+    .progress.health.overview, .liveproject {
+        min-height: 300px;
+        padding: 16px;
+    }
+
+    .risk-chart {
+        height: 210px;
+    }
+}
+
+
+/* ==========================================
+   VERY SMALL PHONES
+========================================== */
+
+@media (max-width: 340px) {
+    nav img {
+        width: 95px;
+    }
+
+    main {
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+
+    .searchbox {
+        grid-template-columns: minmax(76px, 30%) minmax(0, 1fr) 42px;
+        gap: 6px;
+        padding: 8px;
+    }
+
+    #search {
+        width: 42px;
+    }
+
+    .Total.projects, .Revised.cost, .cumulative.expenditure, .Avg.physical.progress {
+        padding: 13px;
+    }
+
+    .progress.health.overview, .liveproject {
+        padding: 14px;
+    }
+}

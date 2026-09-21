@@ -10,7 +10,7 @@ import {
     Tooltip,
     Legend
 } from "chart.js";
-import { getDashboardSummary, getSectors, getErrorMessage } from "../services/api";
+import { getDashboardSummary, getSectors, getErrorMessage, predictAllRisks, predictRiskStatus } from "../services/api";
 
 // Register Chart.js components
 ChartJS.register(
@@ -28,6 +28,9 @@ function Dashboard() {
     const [dashboardData, setDashboardData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [predicting, setPredicting] = useState(false);
+    const [predictConfirming, setPredictConfirming] = useState(false);
+    const [predictStatus, setPredictStatus] = useState(null);
 
     // Fetch dashboard data on component mount
     useEffect(() => {
@@ -72,6 +75,73 @@ function Dashboard() {
         if (event.key === "Enter") event.currentTarget.form?.requestSubmit();
     }
 
+    async function startPredictRisk() {
+        setPredicting(true);
+        setPredictStatus(null);
+        try {
+            await predictAllRisks();
+            pollPredictStatus();
+        } catch (err) {
+            if (err.status === 409) {
+                // A run is already in progress on the server — follow along.
+                pollPredictStatus();
+            } else {
+                setPredicting(false);
+                setPredictStatus({ type: "error", text: getErrorMessage(err) });
+            }
+        }
+    }
+
+    function pollPredictStatus(tries = 0) {
+        const poll = async () => {
+            try {
+                const job = await predictRiskStatus();
+                if (job.status === "running" || job.status === "idle") {
+                    setPredictStatus(job.total
+                        ? { type: "info", text: `Computing risk scores… (${job.updated} of ${job.total} done)` }
+                        : { type: "info", text: "Computing risk scores in the background…" });
+                    if (tries < 60) setTimeout(() => pollPredictStatus(tries + 1), 1500);
+                    else {
+                        setPredicting(false);
+                        setPredictStatus({ type: "info", text: "Computation is still running in the background. Refresh later to see the results." });
+                    }
+                    return;
+                }
+                setPredicting(false);
+                if (job.status === "done") {
+                    const summary = await getDashboardSummary();
+                    setDashboardData(summary);
+                    setPredictStatus(job.updated > 0
+                        ? { type: "success", text: `Risk predictions computed for ${job.updated ?? 0} project${job.updated === 1 ? "" : "s"}.` }
+                        : { type: "info", text: "All projects already have risk predictions." });
+                } else {
+                    setPredictStatus({ type: "error", text: job.error || "Prediction failed in the background." });
+                }
+            } catch {
+                if (tries < 60) setTimeout(() => pollPredictStatus(tries + 1), 1500);
+                else {
+                    setPredicting(false);
+                    setPredictStatus({ type: "error", text: "Could not check the prediction status." });
+                }
+            }
+        };
+        poll();
+    }
+
+    function handlePredictRisk() {
+        if (predicting) return;
+        if (!predictConfirming) {
+            setPredictConfirming(true);
+            setPredictStatus({
+                type: "warn",
+                text: "This will compute AI risk scores only for projects that don't have one yet (e.g. newly added projects), not recompute the whole dataset. Click “+ Predict Risk” again to confirm."
+            });
+            return;
+        }
+        setPredictConfirming(false);
+        startPredictRisk();
+    }
+
     // Build risk distribution chart from API data
     const riskData = {
         labels: ["High Risk", "Medium Risk", "Low Risk"],
@@ -108,7 +178,9 @@ function Dashboard() {
             <>
                 <nav>
                     <Link to="/"><img src={logo} alt="PAIMANA Logo"></img></Link>
-                    <button id="riskbtn"><strong>+ Predict Risk</strong></button>
+                    <button id="riskbtn" onClick={handlePredictRisk} disabled={predicting}>
+                        <strong>{predicting ? "+ Predicting…" : "+ Predict Risk"}</strong>
+                    </button>
                     <button className="header-icon-button" aria-label="Open user account" title="User account">
                         <svg viewBox="0 0 24 24" aria-hidden="true">
                             <path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm7 8a7 7 0 0 0-14 0" />
@@ -126,7 +198,9 @@ function Dashboard() {
         <>
             <nav>
                 <Link to="/"><img src={logo} alt="PAIMANA Logo"></img></Link>
-                <button id="riskbtn"><strong>+ Predict Risk</strong></button>
+                <button id="riskbtn" onClick={handlePredictRisk} disabled={predicting}>
+                    <strong>{predicting ? "+ Predicting…" : "+ Predict Risk"}</strong>
+                </button>
                 <button className="header-icon-button" aria-label="Open user account" title="User account">
                     <svg viewBox="0 0 24 24" aria-hidden="true">
                         <path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm7 8a7 7 0 0 0-14 0" />
@@ -143,6 +217,29 @@ function Dashboard() {
                     borderRadius: "0.5rem"
                 }}>
                     ⚠️ {error}
+                </div>
+            )}
+
+            {predictStatus && (
+                <div style={{
+                    backgroundColor: predictStatus.type === "success"
+                        ? "#dcfce7"
+                        : predictStatus.type === "warn"
+                            ? "#fef3c7"
+                            : "#fee2e2",
+                    color: predictStatus.type === "success"
+                        ? "#166534"
+                        : predictStatus.type === "warn"
+                            ? "#92400e"
+                            : "#991b1b",
+                    padding: "1rem",
+                    margin: "1rem",
+                    borderRadius: "0.5rem"
+                }}>
+                    {predictStatus.type === "success" ? "✅"
+                        : predictStatus.type === "warn" ? "⚠️"
+                            : predictStatus.type === "info" ? "⏳"
+                                : "⚠️"} {predictStatus.text}
                 </div>
             )}
 
