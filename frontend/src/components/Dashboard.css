@@ -718,17 +718,23 @@ main {
         display: none;
     }
 
-    #sector, #projectname {
+    .searchbox #sector, .searchbox #projectname {
         width: 100%;
         min-width: 0;
-        height: 44px;
+        height: 52px;
+        min-height: 52px;
+        max-height: 52px;
+        box-sizing: border-box;
+        padding: 0 14px;
         font-size: 16px;
     }
 
-    #search {
+    .searchbox #search {
         width: 50px;
         min-width: 0;
-        height: 44px;
+        height: 52px;
+        min-height: 52px;
+        max-height: 52px;
         font-size: 20px;
     }
 
@@ -819,7 +825,13 @@ main {
         padding: 10px;
     }
 
-    #sector, #projectname, #search, #riskbtn {
+    .searchbox #sector, .searchbox #projectname, .searchbox #search {
+        height: 52px;
+        min-height: 52px;
+        max-height: 52px;
+    }
+
+    #riskbtn {
         height: 42px;
         font-size: 16px;
     }
