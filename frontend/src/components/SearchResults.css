@@ -258,7 +258,7 @@
     transition: 0.25s ease;
 }
 
-#sector select:focus {
+#sector :focus {
     border-color: #2563eb;
 
     box-shadow:
@@ -366,55 +366,3 @@
   transform: none;
 }
 
-/* =========================================================
-   Responsive Layout
-   ========================================================= */
-
-@media (max-width: 640px) {
-  .searchresultssection {
-    padding: 1.25rem 0.875rem 2rem;
-  }
-
-  .searchresultsheading {
-    margin-bottom: 1.125rem;
-  }
-
-  .resultstopbar {
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 0.75rem;
-    padding: 1rem;
-  }
-
-  .resultsuser {
-    justify-content: flex-start;
-    text-align: left;
-  }
-
-  .resultscontent {
-    padding: 1.5rem 1rem 1.75rem;
-  }
-
-  .backhome,
-  .backhome button {
-    width: 100%;
-  }
-}
-
-/* =========================================================
-   Reduced Motion
-   ========================================================= */
-
-@media (prefers-reduced-motion: reduce) {
-  .backhome,
-  .backhome button {
-    transition: none;
-  }
-
-  .backhome:hover,
-  .backhome button:hover,
-  .backhome:active,
-  .backhome button:active {
-    transform: none;
-  }
-}
