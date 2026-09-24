@@ -41,6 +41,12 @@ app.include_router(alerts.router)
 app.include_router(dashboard.router)
 
 
+
+@app.head("/health", tags=["Health"])
+def health_check_head():
+    return {"status": "ok"}
+
+
 @app.get("/health", tags=["Health"])
 def health_check():
     return {"status": "ok"}
